@@ -16,7 +16,8 @@ void	ft_exec_env(t_envs *envs)
 {
 	while (envs)
 	{
-		printf("%s=%s\n", envs->key, envs->value);
+		if (!ft_strcmp(envs->key, "?"))
+			printf("%s=%s\n", envs->key, envs->value);
 		envs = envs->next;
 	}
 }
