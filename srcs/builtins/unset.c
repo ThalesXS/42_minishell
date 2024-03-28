@@ -12,42 +12,53 @@
 
 #include "../../headers/minishell.h"
 
-static t_envs	*ft_finish(t_envs *envs, t_envs *start, char *key);
+static void		ft_finish(t_envs *envs);
+static t_envs	*ft_unset_variables(t_envs *envs,
+					t_envs *start, t_parsed *tokens);
 
 t_envs	*ft_exec_unset(t_envs *envs, t_parsed *tokens)
 {
 	t_envs	*start;
-	t_envs	*last;
-	char	*key;
 
 	start = envs;
-	last = envs;
 	if (tokens)
-		key = tokens->text;
-	else
-		key = NULL;
-	if (key && !ft_strcmp(key, envs->key))
-		start = envs->next;
-	else
+		start = ft_unset_variables(envs, start, tokens);
+	return_envs(start);
+	return (start);
+}
+
+static t_envs	*ft_unset_variables(t_envs *envs,
+					t_envs *start, t_parsed *tokens)
+{
+	char	*key;
+	t_envs	*last;
+
+	last = envs;
+	while (tokens)
 	{
-		while (envs && key && ft_strcmp(key, envs->key))
+		key = tokens->text;
+		envs = start;
+		if (envs && !ft_strcmp(envs->key, key))
+			start = envs->next;
+		while (envs && ft_strcmp(key, envs->key))
 		{
 			last = envs;
 			envs = envs->next;
 		}
 		if (envs)
+		{
 			last->next = envs->next;
+			if (!ft_strcmp(key, envs->key))
+				ft_finish(envs);
+		}
+		tokens = tokens->next;
 	}
-	return (ft_finish(envs, start, key));
+	return (start);
 }
 
-static t_envs	*ft_finish(t_envs *envs, t_envs *start, char *key)
+static void	ft_finish(t_envs *envs)
 {
-	if (!envs || !key)
-		return (start);
 	free(envs->key);
 	free(envs->value);
 	free(envs);
-	return_envs(start);
-	return (start);
 }
