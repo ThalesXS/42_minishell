@@ -39,7 +39,10 @@ void	ft_exec_cd(t_parsed *tokens, t_envs *envs)
 				ft_update_curr_dir(envs, curr_dir, old_pwd);
 		}
 		else
+		{
 			printf("cd: %s: No such file or directory\n", args);
+			g_signal = 1;
+		}
 	}
 }
 

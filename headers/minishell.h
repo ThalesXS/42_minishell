@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:06:26 by pabernar          #+#    #+#             */
-/*   Updated: 2024/03/24 16:14:18 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:21:28 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ t_envs				*ft_create_envs(void);
 t_envs				*ft_new_env(char *str);
 t_envs				*ft_add_env(t_envs *envs, t_envs *new);
 char				**ft_array_envs(t_envs *envs);
+t_envs 				*ft_create_envs_for_export(t_envs *new, char **new_envs);
 /* ************************************************************************** */
 /*				api.c						   */
 /* ************************************************************************** */
@@ -167,6 +168,10 @@ t_envs				*ft_exec_unset(t_envs *envs, t_parsed *tokens);
 /*				env.c					   */
 /* ************************************************************************** */
 void				ft_exec_env(t_envs *envs);
+void                ft_exec_declare_env(t_envs *envs);
+t_envs   			 *ft_return_new_env(t_envs *new, char **new_envs);
+void				ft_expand_question_mark(t_parsed *tokens,
+						char *new, char *tmp);
 /* ************************************************************************** */
 /*				exit.c					   	      */
 /* ************************************************************************** */
@@ -234,5 +239,6 @@ void				ft_in_doc(int pipe_fd[2], char *heredoc);
 void				ft_free_commands(t_parsed **commands, int total_com);
 void				ft_free_tokens(t_parsed *tokens);
 t_envs				*ft_free_envs(t_envs *envs);
+void                ft_free_array(char **arr);
 
 #endif

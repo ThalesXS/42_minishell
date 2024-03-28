@@ -16,8 +16,43 @@ void	ft_exec_env(t_envs *envs)
 {
 	while (envs)
 	{
-		if (!ft_strcmp(envs->key, "?"))
-			printf("%s=%s\n", envs->key, envs->value);
+		printf("%s=%s\n", envs->key, envs->value);
 		envs = envs->next;
 	}
+}
+
+void    ft_exec_declare_env(t_envs *envs)
+{
+    while (envs)
+    {
+        printf("declare -x %s=\"%s\"\n", envs->key, envs->value);
+        envs = envs->next;
+    }
+}
+
+t_envs    *ft_return_new_env(t_envs *new, char **new_envs)
+{
+    while (*new_envs)
+    {
+        new = ft_add_env(new, ft_new_env(*new_envs));
+        new_envs++;
+    }
+    return (new);
+}
+
+void	ft_expand_question_mark(t_parsed *tokens, char *new, char *tmp)
+{
+	int		klen;
+	char	*signal;
+
+	signal = ft_itoa(g_signal);
+	new = ft_strjoin(tmp, signal);
+	klen = ft_before_exp(tokens->text) + 2;
+	free(tmp);
+	tmp = ft_substr(tokens->text, klen, ft_strlen(tokens->text) - klen);
+	free(tokens->text);
+	tokens->text = ft_strjoin(new, tmp);
+	free(new);
+	free(tmp);
+	free(signal);
 }

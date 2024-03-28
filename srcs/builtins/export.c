@@ -15,6 +15,7 @@
 static int	ft_check_first_char(char *args);
 static int	ft_check_signal_equal(char *args);
 static char	*ft_remove_quotes(char *array_args);
+static void ft_print_sorted_envs(t_envs *envs);
 
 t_envs	*ft_exec_export(t_envs *envs, t_parsed *tokens)
 {
@@ -23,9 +24,12 @@ t_envs	*ft_exec_export(t_envs *envs, t_parsed *tokens)
 
 	new_array = NULL;
 	if (tokens)
-		args = tokens->text;
-	else
-		args = NULL;
+        args = tokens->text;
+    else
+    {
+        ft_print_sorted_envs(envs);
+        return (envs);
+    } 
 	if (ft_check_first_char(args) && ft_check_signal_equal(args))
 	{
 		if (*args == '\"' || *args == '\'')
@@ -96,4 +100,17 @@ static char	*ft_remove_quotes(char *array_args)
 	}
 	new_array[i] = '\0';
 	return (new_array);
+}
+
+static void ft_print_sorted_envs(t_envs *envs)
+{
+    t_envs *new;
+    char **new_envs;
+
+    new_envs = ft_array_envs(envs);
+    new = 0;
+    new = ft_create_envs_for_export(new, new_envs);
+    ft_exec_declare_env(new);
+    ft_free_envs(new);
+    ft_free_array(new_envs);
 }

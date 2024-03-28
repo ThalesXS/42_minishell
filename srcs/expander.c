@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:12:17 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/03/21 19:42:30 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:55:19 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,12 @@ static void	ft_expanding(t_parsed *tokens, char *new, char *tmp, t_envs *envs)
 	klen = ft_key_len(tokens->text);
 	tmp = ft_substr(tokens->text, 0, before_len);
 	point = tokens->text + before_len + 1;
-	while (envs && ft_strncmp(point, envs->key, klen + 1) != 0)
+	if (!ft_strncmp(point, "?", 1))
+	{
+		ft_expand_question_mark(tokens, new, tmp);
+		return ;
+	}
+	while (envs && ft_strncmp(point, envs->key, ft_strlen(envs->key)) != 0)
 		envs = envs->next;
 	if (envs)
 	{

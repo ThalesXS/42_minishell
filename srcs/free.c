@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 22:21:51 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/02/27 10:56:29 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:18:19 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,17 @@ t_envs	*ft_free_envs(t_envs *envs)
 		free(temp);
 	}
 	return (0);
+}
+
+void    ft_free_array(char **arr)
+{
+    int i;
+
+    i = 0;
+    while(arr[i])
+    {
+        free(arr[i]);
+        i++;
+    }
+    free(arr);
 }

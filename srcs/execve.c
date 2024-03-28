@@ -36,8 +36,11 @@ static void	ft_exec_command(char *command, t_parsed *tokens)
 	if (status == 131)
 		printf("Quit (core dumped)\n");
 	else if (status == 2)
+	{
 		printf("\n");
-	ft_save_exit_status(status, envs);
+		status = 130;
+	}
+	g_signal = status;
 	free(command);
 	free_splits(new_array);
 	free_splits(array_env);
