@@ -17,10 +17,10 @@
 		free stuff
 */
 
-void	ft_exit(t_parsed *tokens)
+void    ft_exit(t_parsed *tokens)
 {
 	if (tokens)
 		ft_free_tokens(tokens);
 	ft_free_envs(return_envs(0));
-	exit(0);
+	exit(g_signal);
 }

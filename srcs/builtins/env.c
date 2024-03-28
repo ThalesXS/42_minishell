@@ -43,12 +43,15 @@ t_envs    *ft_return_new_env(t_envs *new, char **new_envs)
     return (new);
 }
 
-void	ft_expand_question_mark(t_parsed *tokens, char *new, char *tmp)
+void    ft_expand_question_mark(t_parsed *tokens, char *new, char *tmp)
 {
-	int		klen;
-	char	*signal;
+	int        klen;
+	char    *signal;
 
-	signal = ft_itoa(g_signal);
+	if (g_signal > 255)
+		signal = ft_itoa(WEXITSTATUS(g_signal));
+	else
+		signal = ft_itoa(g_signal);
 	new = ft_strjoin(tmp, signal);
 	klen = ft_before_exp(tokens->text) + 2;
 	free(tmp);

@@ -41,7 +41,7 @@ void	ft_parser(t_parsed *tokens)
 	if (getpid() != parent)
 		ft_exit(NULL);
 	else
-		waitpid(-1, NULL, 0);
+		waitpid(-1, &g_signal, 0);
 }
 
 static t_parsed	**ft_commands(t_parsed *tokens, int *num_com)

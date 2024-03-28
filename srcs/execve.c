@@ -17,13 +17,12 @@ static char	**ft_count_args(t_parsed *tokens);
 static char	*ft_get_absolut_path(char *command, t_envs *envs);
 static char	*ft_get_relative_path(char *command);
 
-static void	ft_exec_command(char *command, t_parsed *tokens)
+static void    ft_exec_command(char *command, t_parsed *tokens)
 {
-	t_envs	*envs;
-	pid_t	new_process;
-	char	**array_env;
-	char	**new_array;
-	int		status;
+	t_envs    *envs;
+	pid_t    new_process;
+	char    **array_env;
+	char    **new_array;
 
 	new_array = ft_count_args(tokens);
 	envs = return_envs(0);
@@ -32,15 +31,14 @@ static void	ft_exec_command(char *command, t_parsed *tokens)
 	if (!new_process)
 		ft_executer(command, new_array, array_env, tokens);
 	ft_ignore_signals();
-	waitpid(-1, &status, 0);
-	if (status == 131)
+	waitpid(-1, &g_signal, 0);
+	if (g_signal == 131)
 		printf("Quit (core dumped)\n");
-	else if (status == 2)
+	else if (g_signal == 2)
 	{
 		printf("\n");
-		status = 130;
+		g_signal = 130;
 	}
-	g_signal = status;
 	free(command);
 	free_splits(new_array);
 	free_splits(array_env);
