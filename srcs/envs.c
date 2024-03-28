@@ -33,16 +33,20 @@ t_envs	*ft_new_env(char *str)
 
 	envs = malloc(sizeof(t_envs));
 	len = 0;
-	while (str[len] != '=')
+	while (str[len] && str[len] != '=')
 		len++;
-	len++;
-	envs->key = malloc(len);
-	ft_strlcpy(envs->key, str, len);
-	str += (len);
-	len = ft_strlen(str);
-	len++;
-	envs->value = malloc(len);
-	ft_strlcpy(envs->value, str, len);
+	envs->key = malloc(len + 1);
+	ft_strlcpy(envs->key, str, len + 1);
+	if (str[len])
+	{
+		str += len + 1;
+		len = ft_strlen(str);
+		len++;
+		envs->value = malloc(len);
+		ft_strlcpy(envs->value, str, len);
+	}
+	else
+		envs->value = NULL;
 	envs->next = 0;
 	return (envs);
 }
@@ -60,7 +64,8 @@ t_envs	*ft_add_env(t_envs *envs, t_envs *new)
 		if (!ft_strcmp(envs->key, new->key))
 		{
 			free(envs->value);
-			envs->value = new->value;
+			if (new->value)
+				envs->value = new->value;
 			free(new->key);
 			free(new);
 			return (start);
@@ -89,7 +94,10 @@ char	**ft_array_envs(t_envs *envs)
 	while (start)
 	{
 		temp = ft_strjoin(start->key, "=");
-		arr[len] = ft_strjoin(temp, start->value);
+		if (start->value)
+			arr[len] = ft_strjoin(temp, start->value);
+		else
+			arr[len] = ft_strdup((start->key));
 		free(temp);
 		len++;
 		start = start->next;
@@ -100,9 +108,9 @@ char	**ft_array_envs(t_envs *envs)
 
 t_envs *ft_create_envs_for_export(t_envs *new, char **new_envs)
 {
-    t_envs    *start;
-    char    *helper_value;
-    char     *helper_key;
+    t_envs		*start;
+    char		*helper_value;
+    char		*helper_key;
 
     new = ft_return_new_env(new, new_envs);
     start = new;

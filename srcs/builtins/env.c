@@ -25,7 +25,10 @@ void    ft_exec_declare_env(t_envs *envs)
 {
     while (envs)
     {
-        printf("declare -x %s=\"%s\"\n", envs->key, envs->value);
+		if (!envs->value && envs->key)
+        	printf("declare -x %s\n", envs->key);
+		else if (envs->value && envs->key)
+			printf("declare -x %s=\"%s\"\n", envs->key, envs->value);
         envs = envs->next;
     }
 }
