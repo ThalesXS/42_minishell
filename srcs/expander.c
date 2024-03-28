@@ -54,7 +54,7 @@ static void	ft_expanding(t_parsed *tokens, char *new, char *tmp, t_envs *envs)
 	}
 	while (envs && ft_strncmp(point, envs->key, ft_strlen(envs->key)) != 0)
 		envs = envs->next;
-	if (envs)
+	if (envs && envs->value)
 	{
 		new = ft_strjoin(tmp, envs->value);
 		klen = ft_before_exp(tokens->text) + ft_strlen(envs->key) + 1;
