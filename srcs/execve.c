@@ -81,6 +81,8 @@ static char	*ft_get_absolut_path(char *command, t_envs *envs)
 	if (access(command, X_OK) == 0)
 		return (ft_strdup(command));
 	path = ft_get_path(envs);
+	if (!path)
+		return (NULL);
 	while (path[++i])
 	{
 		temp = ft_strjoin(path[i], "/");

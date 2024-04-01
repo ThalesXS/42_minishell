@@ -45,6 +45,7 @@ static void	ft_expanding(t_parsed *tokens, char *new, char *tmp, t_envs *envs)
 
 	before_len = ft_before_exp(tokens->text);
 	klen = ft_key_len(tokens->text);
+	// quando eh passado uma string i.e echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<" , o $ nao existe mais na variavel tmp quando eh feito o substr.
 	tmp = ft_substr(tokens->text, 0, before_len);
 	point = tokens->text + before_len + 1;
 	if (!ft_strncmp(point, "?", 1))
@@ -79,9 +80,7 @@ int	ft_key_len(char *str)
 	while (str[i] && str[i] != '$')
 		i++;
 	if (str[i] == '$')
-	{
 		i++;
-	}
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_' || str[i] == '?'))
 	{
 		i++;

@@ -12,12 +12,11 @@
 
 #include "../../headers/minishell.h"
 
-void	ft_exec_pwd(t_envs *envs)
+void	ft_exec_pwd()
 {
-	while (envs)
-	{
-		if (!ft_strcmp(envs->key, "PWD"))
-			printf("%s\n", envs->value);
-		envs = envs->next;
-	}
+	char	*curr_dir;
+
+	curr_dir = getcwd(0,0);
+	printf("%s\n", curr_dir);
+	free(curr_dir);
 }

@@ -33,6 +33,8 @@ char	**ft_get_path(t_envs *envs)
 
 	path_value = NULL;
 	value = NULL;
+	if (!envs)
+		return (NULL);
 	while (envs)
 	{
 		if (!ft_strncmp(envs->key, "PATH", 4))
@@ -40,7 +42,9 @@ char	**ft_get_path(t_envs *envs)
 		envs = envs->next;
 	}
 	if (value)
+	{
 		path_value = ft_split(value, ':');
-	free(value);
+		free(value);
+	}
 	return (path_value);
 }

@@ -18,6 +18,8 @@ t_envs	*ft_create_envs(void)
 	t_envs		*envs;
 
 	envs = 0;
+	if (!environ)
+		return (NULL);
 	while (*environ)
 	{
 		envs = ft_add_env(envs, ft_new_env(*environ));
