@@ -21,18 +21,32 @@ t_parsed	*ft_expand_variables(t_parsed *tokens)
 	char		*tmp;
 	t_envs		*envs;
 	t_parsed	*aux;
+	t_parsed	*to_free;
 
 	aux = tokens;
 	while (aux && aux->text)
 	{
+		to_free = NULL;
 		while (ft_check_quotes_and_exp(aux->text))
 		{
 			envs = return_envs(0);
 			new = NULL;
 			tmp = NULL;
 			ft_expanding(aux, new, tmp, envs);
+			if (*aux->text == '\0')
+			{
+				if (aux->prev)                                // $DACAX echo thales
+					aux->prev->next = aux->next;
+				else
+					tokens = aux->next;
+				if (aux->next)							// $DACAX next = echo
+					aux->next->prev = aux->prev;		// aux->next->prev = dacax =
+				free(aux->text);
+				to_free = aux;
+			}
 		}
 		aux = aux->next;
+		free(to_free);
 	}
 	return (tokens);
 }

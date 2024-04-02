@@ -17,11 +17,11 @@ static void	ft_treating(t_parsed *tokens);
 static void	ft_check_unite(t_parsed *tokens, const char *line);
 static void	ft_unite(t_parsed *token);
 
-void	ft_treat_token(t_parsed *tokens, char *line)
+void	ft_treat_token(t_parsed **tokens, char *line)
 {
-	ft_check_unite(tokens, line);
-	ft_expand_variables(tokens);
-	ft_treating(tokens);
+	ft_check_unite(*tokens, line);
+	*tokens = ft_expand_variables(*tokens);
+	ft_treating(*tokens);
 }
 
 static void	ft_treating(t_parsed *tokens)

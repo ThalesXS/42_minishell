@@ -62,7 +62,7 @@ static t_parsed	*ft_tokenizer(char *line)
 	}
 	help_hugo_god = pad_central(line);
 	tokens = ft_split_token(help_hugo_god);
-	ft_treat_token(tokens, help_hugo_god);
+	ft_treat_token(&tokens, help_hugo_god);
 	free(help_hugo_god);
 	return (tokens);
 }

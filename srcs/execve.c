@@ -119,7 +119,7 @@ void	ft_find_path(t_parsed *token, t_envs *envs)
 
 	command = ft_strdup(token->text);
 	path = NULL;
-	if (!ft_strncmp(command, "./", 2))
+	if (!ft_strncmp(command, "./", 2) || !ft_strncmp(command, "/", 1))
 		path = ft_get_relative_path(command);
 	else
 		path = ft_get_absolut_path(command, envs);
