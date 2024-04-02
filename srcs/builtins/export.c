@@ -30,7 +30,10 @@ t_envs	*ft_exec_export(t_envs *envs, t_parsed *tokens)
 		if (ft_check_first_char(args))
 			envs = ft_add_env(envs, ft_new_env(args));
 		else
-			printf("export: not a valid identifier\n");
+		{
+			ft_putendl_fd(" not a valid identifier", 2);
+			g_signal = 1;
+		}
 		tokens = tokens->next;
 	}
 	return (envs);
@@ -43,7 +46,15 @@ static int	ft_check_first_char(char *args)
 	while (*args == '\"' || *args == '\'')
 		args++;
 	if (ft_isalpha(*args))
+	{
+		while (*args != '=' && *args)
+		{
+			if (*args == '-')
+				return (0);
+			args++;
+		}
 		return (1);
+	}
 	return (0);
 }
 

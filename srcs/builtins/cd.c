@@ -21,6 +21,13 @@ void	ft_exec_cd(t_parsed *tokens, t_envs *envs)
 	char	old_pwd[PATH_MAX];
 	char	*args;
 
+
+	if (tokens && tokens->next)
+	{
+		ft_putendl_fd(" too many arguments", 2);
+		g_signal = 1;
+		return ;
+	}
 	if (tokens)
 		args = tokens->text;
 	else
@@ -40,7 +47,7 @@ void	ft_exec_cd(t_parsed *tokens, t_envs *envs)
 		}
 		else
 		{
-			printf("cd: %s: No such file or directory\n", args);
+			ft_putendl_fd(" No such file or directory", 2);
 			g_signal = 1;
 		}
 	}

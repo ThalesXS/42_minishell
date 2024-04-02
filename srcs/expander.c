@@ -45,7 +45,6 @@ static void	ft_expanding(t_parsed *tokens, char *new, char *tmp, t_envs *envs)
 
 	before_len = ft_before_exp(tokens->text);
 	klen = ft_key_len(tokens->text);
-	// quando eh passado uma string i.e echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<" , o $ nao existe mais na variavel tmp quando eh feito o substr.
 	tmp = ft_substr(tokens->text, 0, before_len);
 	point = tokens->text + before_len + 1;
 	if (!ft_strncmp(point, "?", 1))
@@ -108,7 +107,7 @@ static int	ft_check_quotes_and_exp(char *str)
 		return (0);
 	while (str[i])
 	{
-		if (str[i] == '$' && !str[i + 1])
+		if (str[i] == '$' && (!str[i + 1] || str[i + 1] == ' ' || str[i + 1] == '\"')) // added (!str[i + 1] || str[i + 1] == ' ' || str[i + 1] == '\"')) to solve 'Test  13' and 'Test 17' from tester online
 			return (0);
 		else if (str[i] == '$')
 			return (1);

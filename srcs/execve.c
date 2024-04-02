@@ -126,6 +126,9 @@ void	ft_find_path(t_parsed *token, t_envs *envs)
 	if (path)
 		ft_exec_command(path, token);
 	else
-		printf("%s: No such file or directory\n", command);
+	{
+		ft_putendl_fd(" command not found", 2);
+		g_signal = 127;
+	}
 	free(command);
 }
