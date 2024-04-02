@@ -143,7 +143,7 @@ t_parsed			**ft_save_commands(t_parsed **commands);
 /* ************************************************************************** */
 /*				builtins.c					   */
 /* ************************************************************************** */
-void				ft_exec_builtins(t_parsed *tokens);
+void    ft_exec_builtins(t_parsed *tokens, t_parsed **commands, int total_com);
 /* ************************************************************************** */
 /*				echo.c					   */
 /* ************************************************************************** */
@@ -179,7 +179,7 @@ void				ft_expand_question_mark(t_parsed *tokens,
 /**
  * @brief Free the memory and exit the program.
  */
-void				ft_exit(t_parsed *tokens);
+void    ft_exit(t_parsed *tokens, t_parsed *force_signal, t_parsed **commands, int total_com);
 
 /* ************************************************************************** */
 /*				signal_handlers.c				   */

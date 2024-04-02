@@ -12,9 +12,9 @@
 
 #include "../../headers/minishell.h"
 
-void	ft_exec_builtins(t_parsed *tokens)
+void    ft_exec_builtins(t_parsed *tokens, t_parsed **commands, int total_com)
 {
-	t_envs	*envs;
+	t_envs    *envs;
 
 	envs = return_envs(0);
 	g_signal = 0;
@@ -23,20 +23,20 @@ void	ft_exec_builtins(t_parsed *tokens)
 	else if (!ft_strcmp(tokens->text, "cd") || !ft_strcmp(tokens->text, "\\cd"))
 		ft_exec_cd(tokens->next, envs);
 	else if (!ft_strcmp(tokens->text, "pwd")
-		|| !ft_strcmp(tokens->text, "\\pwd"))
+			 || !ft_strcmp(tokens->text, "\\pwd"))
 		ft_exec_pwd();
 	else if (!ft_strcmp(tokens->text, "export") || !ft_strcmp(tokens->text,
-			"\\export"))
+															  "\\export"))
 		envs = ft_exec_export(envs, tokens->next);
 	else if (!ft_strcmp(tokens->text, "unset") || !ft_strcmp(tokens->text,
-			"\\unset"))
+															 "\\unset"))
 		envs = ft_exec_unset(envs, tokens->next);
 	else if (!ft_strcmp(tokens->text, "env")
-		|| !ft_strcmp(tokens->text, "\\env"))
+			 || !ft_strcmp(tokens->text, "\\env"))
 		ft_exec_env(envs);
 	else if (!ft_strcmp(tokens->text, "exit")
-		|| !ft_strcmp(tokens->text, "\\exit"))
-		ft_exit(tokens);
+			 || !ft_strcmp(tokens->text, "\\exit"))
+		ft_exit(NULL, tokens->next, commands, total_com);
 	else
 		ft_find_path(tokens, envs);
 }

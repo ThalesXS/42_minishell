@@ -15,7 +15,7 @@
 void	ft_handle_eof(void)
 {
 	printf("exit\n");
-	ft_exit(NULL);
+	ft_exit(NULL, NULL, NULL, 0);
 }
 
 void	ft_handle_sigint(int sig)

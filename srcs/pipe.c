@@ -68,7 +68,7 @@ pid_t	ft_manage_heredoc(int pipe_fd[2], char *heredoc,
 		dup2(std_0, 0);
 		ft_in_doc(pipe_fd, heredoc);
 		ft_free_commands(tokens, 1);
-		ft_exit(NULL);
+		ft_exit(NULL, NULL, NULL, 0);
 	}
 	else
 		waitpid(pid, &status, 0);

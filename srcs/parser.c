@@ -17,13 +17,13 @@ static int		ft_count_pipe(t_parsed *tokens);
 static void		ft_overpipe(t_parsed **tokens, int *num_com);
 static void		ft_disconect(t_parsed *aux);
 
-void	ft_parser(t_parsed *tokens)
+void    ft_parser(t_parsed *tokens)
 {
-	t_parsed	**commands;
-	int			num_com;
-	int			total_com;
-	int			std_fd[2];
-	pid_t		parent;
+	t_parsed    **commands;
+	int            num_com;
+	int            total_com;
+	int            std_fd[2];
+	pid_t        parent;
 
 	parent = getpid();
 	std_fd[0] = dup(0);
@@ -32,14 +32,14 @@ void	ft_parser(t_parsed *tokens)
 	num_com = 0;
 	ft_pipe(&num_com, total_com, parent);
 	if (ft_redirect(commands, num_com, std_fd[0]) != -1 && commands[num_com])
-		ft_exec_builtins(commands[num_com]);
+		ft_exec_builtins(commands[num_com], commands, total_com);
 	dup2(std_fd[0], 0);
 	dup2(std_fd[1], 1);
 	close(std_fd[0]);
 	close(std_fd[1]);
 	ft_free_commands(commands, total_com);
 	if (getpid() != parent)
-		ft_exit(NULL);
+		ft_exit(NULL, NULL, NULL, 0);
 	else
 		waitpid(-1, &g_signal, 0);
 }
