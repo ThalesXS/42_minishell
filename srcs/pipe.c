@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:15:14 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/02/27 18:34:01 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/03 19:24:53 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ pid_t	ft_manage_heredoc(int pipe_fd[2], char *heredoc,
 			int std_0, t_parsed **tokens)
 {
 	pid_t	pid;
-	int		status;
 
 	pid = fork();
 	ft_ignore_signals();
@@ -71,8 +70,8 @@ pid_t	ft_manage_heredoc(int pipe_fd[2], char *heredoc,
 		ft_exit(NULL, NULL, NULL, 0);
 	}
 	else
-		waitpid(pid, &status, 0);
-	if (status != 65280)
+		waitpid(pid, &g_signal, 0);
+	if (g_signal != 65280)
 		dup2(pipe_fd[0], 0);
 	else
 		pid = -2;

@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 09:37:04 by pabernar          #+#    #+#             */
-/*   Updated: 2024/02/27 17:54:50 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/03 20:12:24 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void    ft_parser(t_parsed *tokens)
 		ft_exit(NULL, NULL, NULL, 0);
 	else
 		waitpid(-1, &g_signal, 0);
-	if (num_com != 0)
+	if (num_com != 0 && g_signal != 0)
 		g_signal = num_com;
 }
 

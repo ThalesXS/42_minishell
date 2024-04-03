@@ -36,7 +36,6 @@ static t_envs	*ft_unset_variables(t_envs *envs,
 	last = envs;
 	while (tokens)
 	{
-		printf("token = [%s]\n", tokens->text);
 		key = tokens->text;
 		envs = start;
 		if (envs && !ft_strcmp(envs->key, key))
@@ -45,17 +44,15 @@ static t_envs	*ft_unset_variables(t_envs *envs,
 		{
 			last = envs;
 			envs = envs->next;
-			printf("env = [%s]\n", envs->key);
 		}
 		if (envs)
-				{
+		{
 			last->next = envs->next;
 			if (!ft_strcmp(key, envs->key))
 				ft_finish(envs);
 		}
 		tokens = tokens->next;
 	}
-	printf("Tudo certo ate aqui \n");
 	return (start);
 }
 

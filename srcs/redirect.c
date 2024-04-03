@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:08:49 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/02/27 17:55:58 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/03 20:09:23 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,15 @@ int	ft_redirect(t_parsed **tokens, int num_com, int std_0)
 			fd = ft_input(&aux, tokens, num_com);
 		else if (aux->type == RD_HEREDOC)
 			fd = ft_doc(&aux, tokens, num_com, std_0);
+		if (fd == -1)
+			ft_putendl_fd(" No such file or directory", 2);
+		if (fd <= -1)
+		{
+			g_signal = 1;
+			return (-1);
+		}
 		if (aux)
 			aux = aux->next;
-		if (fd == -1)
-			ft_putstr_fd("Invalid file permission for redirection.\n", 1);
-		if (fd <= -1)
-			return (-1);
 	}
 	return (fd);
 }
@@ -72,6 +75,7 @@ static int	ft_write_append(t_parsed **aux, t_parsed **tokens,
 	else
 		tokens[num_com] = *aux;
 	ft_free_tokens(free_me);
+	*aux = tokens[num_com];
 	return (fd);
 }
 
@@ -100,6 +104,7 @@ static int	ft_input(t_parsed **aux, t_parsed **tokens, int num_com)
 	else
 		tokens[num_com] = *aux;
 	ft_free_tokens(free_me);
+	*aux = tokens[num_com];
 	return (fd);
 }
 
