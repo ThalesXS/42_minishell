@@ -15,7 +15,6 @@
 static void	ft_exec_command(char *command, t_parsed *tokens);
 static char	**ft_count_args(t_parsed *tokens);
 static char	*ft_get_absolut_path(char *command, t_envs *envs);
-//static char	*ft_get_relative_path(char *command);
 
 static void    ft_exec_command(char *command, t_parsed *tokens)
 {
@@ -98,36 +97,6 @@ static char	*ft_get_absolut_path(char *command, t_envs *envs)
 	return (free_splits(path), NULL);
 }
 
-//static char	*ft_get_relative_path(char *command)
-//{
-////	char	*curr_dir;
-////	char	*relative_path;
-////	char	*temp;
-//	struct stat path_stat;
-//
-////	curr_dir = getcwd(NULL, 0);
-////	temp = ft_strjoin(curr_dir, "/");
-////	relative_path = ft_strjoin(temp, command);
-////	free(temp);
-////	free(curr_dir);
-//	stat(command, &path_stat);
-////	printf("%s\n",command);
-//	if (access(command, X_OK) != 0)
-//	{
-//		if (!S_ISDIR(path_stat.st_mode))
-//		{
-//			ft_putendl_fd(" Is a directory", 2);
-//			g_signal = 126;
-//		}
-//		else
-//		{
-//			ft_putendl_fd(" No such file or directory", 2);
-//			g_signal = 127;
-//		}
-//	}
-//	return (command);
-//}
-
 void	ft_find_path(t_parsed *token, t_envs *envs)
 {
 	char	*command;
@@ -135,9 +104,6 @@ void	ft_find_path(t_parsed *token, t_envs *envs)
 
 	command = ft_strdup(token->text);
 	path = NULL;
-	/*if (!ft_strncmp(command, "./", 2) || !ft_strncmp(command, "/", 1))
-		path = ft_get_relative_path(command);*/
-//	else
 	path = ft_get_absolut_path(command, envs);
 	if (path)
 		ft_exec_command(path, token);
@@ -145,9 +111,14 @@ void	ft_find_path(t_parsed *token, t_envs *envs)
 	{
 		if (access(command, F_OK) && (!strncmp(command, "/", 1) || !strncmp(command, "./", 2)))
 			ft_putendl_fd(" No such file or directory", 2);
+		else if (access(command, X_OK) && (!strncmp(command, "/", 1) || !strncmp(command, "./", 2)))
+		{
+			ft_putendl_fd(" Permission denied", 2);
+			g_signal = 126;
+			return ;
+		}
 		else
 			ft_putendl_fd(" command not found", 2);
 		g_signal = 127;
 	}
-//	free(command);
 }

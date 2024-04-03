@@ -15,7 +15,7 @@
 static int	ft_check_first_char(char *args);
 static void ft_print_sorted_envs(t_envs *envs);
 
-t_envs	*ft_exec_export(t_envs *envs, t_parsed *tokens)
+t_envs	*ft_exec_export(t_envs *envs, t_parsed *tokens, int total_com)
 {
 	char	*args;
 
@@ -28,7 +28,12 @@ t_envs	*ft_exec_export(t_envs *envs, t_parsed *tokens)
 	{
 		args = tokens->text;
 		if (ft_check_first_char(args))
-			envs = ft_add_env(envs, ft_new_env(args));
+		{
+			if (total_com == 1)
+				envs = ft_add_env(envs, ft_new_env(args));
+			else
+				g_signal = 1;
+		}
 		else
 		{
 			ft_putendl_fd(" not a valid identifier", 2);

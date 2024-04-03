@@ -27,7 +27,7 @@ void    ft_exec_builtins(t_parsed *tokens, t_parsed **commands, int total_com)
 		ft_exec_pwd();
 	else if (!ft_strcmp(tokens->text, "export") || !ft_strcmp(tokens->text,
 															  "\\export"))
-		envs = ft_exec_export(envs, tokens->next);
+		envs = ft_exec_export(envs, tokens->next, total_com);
 	else if (!ft_strcmp(tokens->text, "unset") || !ft_strcmp(tokens->text,
 															 "\\unset"))
 		envs = ft_exec_unset(envs, tokens->next);

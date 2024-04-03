@@ -6,7 +6,7 @@
 /*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:20:20 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/02/12 12:20:20 by dmeirele         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:21:07 by dmeirele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static t_envs	*ft_unset_variables(t_envs *envs,
 	last = envs;
 	while (tokens)
 	{
+		printf("token = [%s]\n", tokens->text);
 		key = tokens->text;
 		envs = start;
 		if (envs && !ft_strcmp(envs->key, key))
@@ -44,15 +45,17 @@ static t_envs	*ft_unset_variables(t_envs *envs,
 		{
 			last = envs;
 			envs = envs->next;
+			printf("env = [%s]\n", envs->key);
 		}
 		if (envs)
-		{
+				{
 			last->next = envs->next;
 			if (!ft_strcmp(key, envs->key))
 				ft_finish(envs);
 		}
 		tokens = tokens->next;
 	}
+	printf("Tudo certo ate aqui \n");
 	return (start);
 }
 

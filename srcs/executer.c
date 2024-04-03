@@ -38,7 +38,6 @@ void	ft_executer(char *command, char **new_array,
 		}
 		free_splits(new_array);
 		free_splits(array_env);
-//		free(command);
 		ft_exit(tokens, NULL, NULL, 0);
 	}
 }
