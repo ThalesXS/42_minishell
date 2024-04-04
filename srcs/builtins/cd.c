@@ -21,7 +21,6 @@ void	ft_exec_cd(t_parsed *tokens, t_envs *envs)
 	char	old_pwd[PATH_MAX];
 	char	*args;
 
-
 	if (tokens && tokens->next)
 	{
 		ft_putendl_fd(" too many arguments", 2);
@@ -47,7 +46,10 @@ void	ft_exec_cd(t_parsed *tokens, t_envs *envs)
 		}
 		else
 		{
-			ft_putendl_fd(" No such file or directory", 2);
+			if (errno == 13)
+				ft_putendl_fd(" Permission denied", 2);
+			else if(errno == 2)	
+				ft_putendl_fd(" No such file or directory", 2);
 			g_signal = 1;
 		}
 	}
