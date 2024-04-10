@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 09:24:42 by pabernar          #+#    #+#             */
-/*   Updated: 2024/04/03 16:18:09 by dmeirele         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:15:52 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@ void	ft_minishell(void)
 	t_envs		*envs;
 
 	envs = NULL;
+	envs = return_envs(NULL);
 	while (1)
 	{
 		prompt = ft_get_dir();
 		line = readline(prompt);
 		free(prompt);
-		if (!envs)
-			envs = return_envs(ft_create_envs());
 		if (!line)
 			ft_handle_eof();
 		if (!line[0])

@@ -6,24 +6,23 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:00:28 by pabernar          #+#    #+#             */
-/*   Updated: 2024/03/28 16:18:00 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:15:04 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-t_envs	*ft_create_envs(void)
+t_envs	*ft_create_envs(char **envp)
 {
-	extern char	**environ;
 	t_envs		*envs;
 
 	envs = 0;
-	if (!environ)
+	if (!envp)
 		return (NULL);
-	while (*environ)
+	while (*envp)
 	{
-		envs = ft_add_env(envs, ft_new_env(*environ));
-		environ++;
+		envs = ft_add_env(envs, ft_new_env(*envp));
+		envp++;
 	}
 	return (envs);
 }

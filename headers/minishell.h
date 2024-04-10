@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:06:26 by pabernar          #+#    #+#             */
-/*   Updated: 2024/04/03 19:40:51 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:15:24 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void				ft_find_path(t_parsed *token, t_envs *envs);
 /* ************************************************************************* */
 /*				envs.c						   */
 /* ************************************************************************** */
-t_envs				*ft_create_envs(void);
+t_envs				*ft_create_envs(char **envp);
 t_envs				*ft_new_env(char *str);
 t_envs				*ft_add_env(t_envs *envs, t_envs *new);
 char				**ft_array_envs(t_envs *envs);
