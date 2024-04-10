@@ -52,12 +52,14 @@ static t_parsed	*ft_tokenizer(char *line)
 		return (NULL);
 	if (!redirect_basic_check(line))
 	{
-		ft_printf("invalid redirect\n");
+		ft_putendl_fd(" syntax error near invalid redirect", 2);
+		g_signal = 2;
 		return (NULL);
 	}
 	if (!pipe_check(line))
 	{
-		ft_printf("Unexpected near '|'\n");
+		ft_putendl_fd(" syntax error near unexpected token `|'", 2);
+		g_signal = 2;
 		return (NULL);
 	}
 	help_hugo_god = pad_central(line);

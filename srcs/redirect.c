@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:08:49 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/03 20:09:23 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:18:06 by dmeirele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ static int	ft_doc(t_parsed **aux, t_parsed **tokens, int num_com, int std_0)
 	*aux = (*aux)->next->next;
 	status = pipe(pipe_fd);
 	if (status == -1)
-		ft_printf("Error creating pipe\n");
+		ft_putendl_fd("Error creating pipe", 2);
 	pid = ft_manage_heredoc(pipe_fd, free_me->next->text, std_0, tokens);
 	free_me->next->next = NULL;
 	if (tmp)
@@ -149,10 +149,10 @@ void	ft_in_doc(int pipe_fd[2], char *heredoc)
 			break ;
 		status = write(pipe_fd[1], line, ft_strlen(line));
 		if (status == -1)
-			ft_printf("Error writing to pipe\n");
+			ft_putendl_fd("Erro writing to pipe", 2);
 		status = write(pipe_fd[1], "\n", 1);
 		if (status == -1)
-			ft_printf("Error writing to pipe\n");
+			ft_putendl_fd("Erro writing to pipe", 2);
 		free(line);
 	}
 }

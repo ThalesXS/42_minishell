@@ -91,12 +91,20 @@ int	valid_tokens(t_parsed *tokens)
 		if (type == PIPE)
 		{
 			if (!tokens->next || !tokens->prev || tokens->next->type == PIPE)
-				return (printf("Invalid Pipe\n"), 0);
+			{
+				ft_putendl_fd("Invalid Pipe", 2);
+				g_signal = 2;
+				return (0);
+			}
 		}
 		else if (type != STRING)
 		{
 			if (!tokens->next || tokens->next->type != STRING)
-				return (printf("Invalid Redirect\n"), 0);
+			{
+				ft_putendl_fd(" syntax error near unexpected token `newline'", 2);
+				g_signal = 2;
+				return (0);
+			}
 		}
 		tokens = tokens->next;
 	}
