@@ -3,26 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabernar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/04 09:15:14 by pabernar          #+#    #+#             */
-/*   Updated: 2023/10/04 09:28:43 by pabernar         ###   ########.fr       */
+/*   Created: 2023/10/03 13:31:31 by txisto-d          #+#    #+#             */
+/*   Updated: 2023/10/03 13:33:08 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
 int	ft_toupper(int c)
 {
-	if (ft_isalpha(c) && c >= 'a')
-		return (c - 32);
+	if (c >= 'a' && c <= 'z')
+		c -= 32;
 	return (c);
 }
-/*
-#include <stdio.h>
-
-int	main(void)
-{
-	printf("%c\n", ft_toupper('a'));
-	return (0);
-}*/

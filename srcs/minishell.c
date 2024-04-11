@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 09:24:42 by pabernar          #+#    #+#             */
-/*   Updated: 2024/04/10 16:15:52 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/11 16:27:19 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ void	ft_minishell(void)
 	char		*line;
 	char		*prompt;
 	t_parsed	*tokens;
-	t_envs		*envs;
 
-	envs = NULL;
-	envs = return_envs(NULL);
 	while (1)
 	{
 		prompt = ft_get_dir();

@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 14:29:26 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/02/26 21:44:29 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/11 16:52:15 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_get_dir(void)
 	char	*tmp;
 
 	tmp = getcwd(NULL, 0);
+	if (!tmp)
+		tmp = ft_get_pwd_env();
 	dir = ft_strjoin \
 	("\001\033[1;32m\002minishell@42\001\033[0m\002:\001\033[1;34m\002", tmp);
 	free(tmp);
@@ -47,4 +49,22 @@ char	**ft_get_path(t_envs *envs)
 		free(value);
 	}
 	return (path_value);
+}
+
+char	*ft_get_pwd_env(void)
+{
+	char	*tmp;
+	t_envs	*envs;
+
+	envs = return_envs(NULL);
+	while (envs)
+	{
+		if (!ft_strncmp(envs->key, "PWD", 3))
+		{
+			tmp = ft_strdup(envs->value);
+			return (tmp);
+		}
+		envs = envs->next;
+	}
+	return (NULL);
 }

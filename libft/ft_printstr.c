@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_printstr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/07 11:05:37 by txisto-d          #+#    #+#             */
-/*   Updated: 2023/10/09 14:10:41 by txisto-d         ###   ########.fr       */
+/*   Created: 2023/10/07 11:03:57 by txisto-d          #+#    #+#             */
+/*   Updated: 2023/10/16 19:01:53 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putendl_fd(char *s, int fd)
+void	ft_printstr(const char *s, t_string *string)
 {
-	ft_putstr_fd(s, fd);
-	ft_putchar_fd('\n', fd);
+	while (*s)
+		ft_printchar(*s++, string);
+}
+
+void	ft_printstr_ltda(const char *s, t_string *string)
+{
+	while (*s && *s != '%')
+		ft_printchar(*s++, string);
 }

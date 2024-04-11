@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabernar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/02 12:20:32 by pabernar          #+#    #+#             */
-/*   Updated: 2023/10/03 17:05:01 by pabernar         ###   ########.fr       */
+/*   Created: 2023/10/03 09:33:31 by txisto-d          #+#    #+#             */
+/*   Updated: 2023/10/03 10:18:01 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "libft.h"
 
 int	ft_isalpha(int c)
 {
@@ -18,14 +16,3 @@ int	ft_isalpha(int c)
 		return (1);
 	return (0);
 }
-/*
-#include <stdio.h>
-
-int	main(void)
-{
-	printf("%i\n", ft_isalpha(65));
-	printf("%i\n", ft_isalpha(94));
-	printf("%i\n", ft_isalpha(99));
-	printf("%i", ft_isalpha('P'));
-	return (0);
-}*/

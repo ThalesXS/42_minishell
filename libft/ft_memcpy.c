@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabernar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 10:09:08 by pabernar          #+#    #+#             */
-/*   Updated: 2023/10/06 12:15:07 by pabernar         ###   ########.fr       */
+/*   Created: 2023/10/03 12:54:17 by txisto-d          #+#    #+#             */
+/*   Updated: 2023/10/06 11:21:38 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,16 @@
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	unsigned char	*tar;
-	const char		*ptr;
-	size_t			i;
+	unsigned char		*aux_src;
+	unsigned char		*aux_dest;
+	size_t				i;
 
-	tar = dest;
-	ptr = src;
 	i = 0;
-	if (dest == 0 && src == 0)
+	aux_src = (unsigned char *) src;
+	aux_dest = dest;
+	if (!dest && !src)
 		return (dest);
-	while (i < n)
-	{
-		tar[i] = ptr[i];
-		i++;
-	}
+	while (i++ < n)
+		*aux_dest++ = *aux_src++;
 	return (dest);
 }
-/*
-#include <stdlib.h>
-#include <stdio.h>
-
-int	main(void)
-{
-	char	*str;
-	char	*frase;
-	
-	str = malloc(11);
-	str[10] = '\0';
-	frase = "1234567890";
-	ft_memcpy(str, frase, 10);
-	printf("%s", str);
-	free(str);
-	return (0);
-}*/

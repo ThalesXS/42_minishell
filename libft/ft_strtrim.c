@@ -3,94 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabernar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/07 12:35:50 by pabernar          #+#    #+#             */
-/*   Updated: 2023/10/07 17:12:26 by pabernar         ###   ########.fr       */
+/*   Created: 2023/10/06 08:56:39 by txisto-d          #+#    #+#             */
+/*   Updated: 2023/10/09 15:04:25 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_inset(const char c, char const *set)
+static int	ft_in_set(char c, char const *set)
 {
-	size_t	i;
-
-	i = 0;
-	while (set[i])
+	while (*set)
 	{
-		if (c == set[i])
+		if (c == *set)
 			return (1);
-		i++;
+		set++;
 	}
 	return (0);
-}
-
-static size_t	ft_strtrim_strlen(char const *s1, char const *set)
-{
-	size_t	i;
-	size_t	count;
-
-	i = 0;
-	count = 0;
-	while (s1[i] && ft_inset(s1[i], set))
-		i++;
-	while (s1[i])
-	{
-		count++;
-		i++;
-	}
-	i--;
-	while (ft_inset(s1[i], set))
-	{
-		if (count > 0)
-			count--;
-		else
-			return (count);
-		i--;
-	}
-	return (count);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	char	*str;
-	size_t	i;
-	size_t	j;
-	size_t	len;	
+	char	*trim;
+	int		s1_len;
 
-	len = ft_strtrim_strlen(s1, set);
-	if (len)
-		str = malloc(len + 1);
-	else
-		str = malloc(1);
-	i = 0;
-	j = 0;
-	if (!str)
-		return (0);
-	while (s1[i] && ft_inset(s1[i], set))
-		i++;
-	while (s1[i] && len > 0)
-	{
-		str[j] = s1[i];
-		len--;
-		i++;
-		j++;
-	}
-	str[j] = '\0';
-	return (str);
+	while (ft_in_set(*s1, set))
+		s1++;
+	s1_len = ft_strlen(s1);
+	while (ft_in_set(s1[s1_len - 1], set))
+		s1_len--;
+	trim = ft_substr(s1, 0, s1_len);
+	return (trim);
 }
-/*
-#include <stdio.h>
-
-int	main(void)
-{
-	char	*str;
-	char	*set;
-
-	str = "-----The-cake-is-a-lie-----";
-	set = "-";
-	str = ft_strtrim(str, set);
-	printf("%s", str);
-	return (0);
-}*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabernar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 09:15:10 by pabernar          #+#    #+#             */
-/*   Updated: 2023/10/06 12:23:50 by pabernar         ###   ########.fr       */
+/*   Created: 2023/10/03 12:50:50 by txisto-d          #+#    #+#             */
+/*   Updated: 2023/10/05 09:02:28 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,14 @@
 
 void	ft_bzero(void *s, size_t n)
 {
-	unsigned char	*ptr;
+	unsigned char	*aux;
 	size_t			i;
 
-	ptr = s;
+	aux = s;
 	i = 0;
 	while (i < n)
 	{
-		ptr[i] = 0;
+		aux[i] = 0;
 		i++;
 	}
 }
-/*
-#include <stdlib.h>
-#include <stdio.h>
-
-int	main(void)
-{
-	char	*str;
-	int	i;
-
-	i = 0;
-	str = malloc(11);
-	str[10] = '5';
-	ft_bzero(str, 10);
-	while (str[i] == 0)
-	{
-		printf("Null\n");
-		i++;
-	}	
-	printf("%c", str[i]);
-	free(str);
-	return (0);
-}*/

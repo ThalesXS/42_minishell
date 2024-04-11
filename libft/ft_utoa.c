@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_utoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 14:14:28 by txisto-d          #+#    #+#             */
-/*   Updated: 2023/10/07 09:49:36 by txisto-d         ###   ########.fr       */
+/*   Created: 2023/10/14 10:38:56 by txisto-d          #+#    #+#             */
+/*   Updated: 2023/10/14 10:39:06 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	ft_itlen(long n)
+static size_t	ft_utlen(long n)
 {
 	size_t	len;
 
@@ -32,30 +32,30 @@ static size_t	ft_itlen(long n)
 	return (len);
 }
 
-char	*ft_itoa(int n)
+char	*ft_utoa(unsigned int n)
 {
-	char	*ittoed;
+	char	*uttoed;
 	long	num;
 	size_t	len;
 	size_t	i;
 
 	i = 2;
 	num = n;
-	len = ft_itlen(num) + 1;
-	ittoed = ft_calloc(len, 1);
-	if (!ittoed)
+	len = ft_utlen(num) + 1;
+	uttoed = ft_calloc(len, 1);
+	if (!uttoed)
 		return (NULL);
 	if (num < 0)
 	{
-		ittoed[0] = '-';
+		uttoed[0] = '-';
 		num = -num;
 	}
 	while (num >= 10)
 	{
-		ittoed[len - i] = num % 10 + '0';
+		uttoed[len - i] = num % 10 + '0';
 		num /= 10;
 		i++;
 	}
-	ittoed[len - i] = num + '0';
-	return (ittoed);
+	uttoed[len - i] = num + '0';
+	return (uttoed);
 }

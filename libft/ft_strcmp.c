@@ -6,12 +6,16 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 11:05:35 by pabernar          #+#    #+#             */
-/*   Updated: 2024/02/21 11:51:08 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/11 16:34:49 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_strcmp(char *s1, char *s2)
 {
+	if (!s1 && !s2)
+		return (0);
+	if (!s1 || !s2)
+		return (1);
 	while (*s1 == *s2 && *s1 && *s2)
 	{
 		s1++;

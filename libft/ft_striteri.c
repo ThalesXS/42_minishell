@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabernar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 09:17:55 by pabernar          #+#    #+#             */
-/*   Updated: 2023/10/10 09:39:08 by pabernar         ###   ########.fr       */
+/*   Created: 2023/10/07 10:55:44 by txisto-d          #+#    #+#             */
+/*   Updated: 2023/10/07 11:03:21 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,3 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 		i++;
 	}
 }
-/*
-int	main(void)
-{
-	return (0)
-}*/

@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:06:26 by pabernar          #+#    #+#             */
-/*   Updated: 2024/04/10 16:15:24 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/11 16:51:41 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,7 @@ void				ft_handle_doc(int sig);
  */
 char				*ft_get_dir(void);
 char				**ft_get_path(t_envs *envs);
+char				*ft_get_pwd_env(void);
 
 /* ************************************************************************** */
 /*									split_token.c							*/
