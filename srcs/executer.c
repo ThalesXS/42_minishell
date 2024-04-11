@@ -40,6 +40,12 @@ void	ft_executer(char *command, char **new_array,
 		free_splits(array_env);
 		ft_exit(tokens, NULL, NULL, 0);
 	}
+	else
+	{
+		free_splits(new_array);
+		free_splits(array_env);
+		ft_exit(tokens, NULL, NULL, 0);
+	}
 }
 void	ft_save_exit_status(int status, t_envs *envs)
 {

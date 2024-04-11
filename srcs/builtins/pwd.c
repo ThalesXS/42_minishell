@@ -14,9 +14,24 @@
 
 void	ft_exec_pwd()
 {
+	t_envs	*envs;
 	char	*curr_dir;
 
-	curr_dir = getcwd(0,0);
-	printf("%s\n", curr_dir);
+	envs = return_envs(0);
+	curr_dir = getcwd(0, 0);
+	if (!curr_dir)
+	{
+		while (envs)
+		{
+			 if (!ft_strcmp(envs->key, "PWD"))
+			 {
+				 curr_dir = ft_strdup(envs->value);
+				 printf("%s\n",curr_dir);
+			 }
+			 envs = envs->next;
+		}
+	}
+	else
+		printf("%s\n", curr_dir);
 	free(curr_dir);
 }

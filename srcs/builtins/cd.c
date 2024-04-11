@@ -19,6 +19,7 @@ void	ft_exec_cd(t_parsed *tokens, t_envs *envs)
 {
 	char	curr_dir[PATH_MAX];
 	char	old_pwd[PATH_MAX];
+	char 	*helper_pwd;
 	char	*args;
 
 	if (tokens && tokens->next)
@@ -51,6 +52,20 @@ void	ft_exec_cd(t_parsed *tokens, t_envs *envs)
 			else if(errno == 2)	
 				ft_putendl_fd(" No such file or directory", 2);
 			g_signal = 1;
+		}
+	}
+	else
+	{
+		// ja funciona mas tenho que verificar se nas envs atualiza o old pwd com a pasta de merda que foi apagada
+		while (envs)
+		{
+			if (!ft_strcmp(envs->key, "OLDPWD"))
+			{
+				helper_pwd = ft_strdup(envs->value);
+				chdir(helper_pwd);
+				free(helper_pwd);
+			}
+			envs = envs->next;
 		}
 	}
 }
