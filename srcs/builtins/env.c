@@ -22,32 +22,32 @@ void	ft_exec_env(t_envs *envs)
 	}
 }
 
-void    ft_exec_declare_env(t_envs *envs)
+void	ft_exec_declare_env(t_envs *envs)
 {
-    while (envs)
-    {
+	while (envs)
+	{
 		if (!envs->value && envs->key)
-        	printf("declare -x %s\n", envs->key);
+			printf("declare -x %s\n", envs->key);
 		else if (envs->value && envs->key)
 			printf("declare -x %s=\"%s\"\n", envs->key, envs->value);
-        envs = envs->next;
-    }
+		envs = envs->next;
+	}
 }
 
-t_envs    *ft_return_new_env(t_envs *new, char **new_envs)
+t_envs	*ft_return_new_env(t_envs *new, char **new_envs)
 {
-    while (*new_envs)
-    {
-        new = ft_add_env(new, ft_new_env(*new_envs));
-        new_envs++;
-    }
-    return (new);
+	while (*new_envs)
+	{
+		new = ft_add_env(new, ft_new_env(*new_envs));
+		new_envs++;
+	}
+	return (new);
 }
 
-void    ft_expand_question_mark(t_parsed *tokens, char *new, char *tmp)
+int	ft_expand_question_mark(t_parsed *tokens, char *new, char *tmp)
 {
-	int        klen;
-	char    *signal;
+	int		klen;
+	char	*signal;
 
 	if (g_signal > 255)
 		signal = ft_itoa(WEXITSTATUS(g_signal));
@@ -62,4 +62,5 @@ void    ft_expand_question_mark(t_parsed *tokens, char *new, char *tmp)
 	free(new);
 	free(tmp);
 	free(signal);
+	return (1);
 }

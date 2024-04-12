@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:08:49 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/09 14:18:06 by dmeirele         ###   ########.fr       */
+/*   Updated: 2024/04/12 21:12:00 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
-
-static int	ft_write_append(t_parsed **aux, t_parsed **tokens,
-				int num_com, int flag);
-static int	ft_input(t_parsed **aux, t_parsed **tokens, int num_com);
-static int	ft_doc(t_parsed **aux, t_parsed **tokens, int num_com, int std_0);
 
 int	ft_redirect(t_parsed **tokens, int num_com, int std_0)
 {
@@ -26,18 +21,7 @@ int	ft_redirect(t_parsed **tokens, int num_com, int std_0)
 	fd = 1;
 	while (aux)
 	{
-		if (aux->type == RD_OVERWRITE)
-			fd = ft_write_append(&aux, tokens,
-					num_com, O_WRONLY | O_CREAT | O_TRUNC);
-		else if (aux->type == RD_APPEND)
-			fd = ft_write_append(&aux, tokens,
-					num_com, O_WRONLY | O_CREAT | O_APPEND);
-		else if (aux->type == RD_INPUT)
-			fd = ft_input(&aux, tokens, num_com);
-		else if (aux->type == RD_HEREDOC)
-			fd = ft_doc(&aux, tokens, num_com, std_0);
-		if (fd == -1)
-			ft_putendl_fd(" No such file or directory", 2);
+		fd = ft_get_fd(aux, tokens, num_com, std_0);
 		if (fd <= -1)
 		{
 			g_signal = 1;
@@ -49,7 +33,7 @@ int	ft_redirect(t_parsed **tokens, int num_com, int std_0)
 	return (fd);
 }
 
-static int	ft_write_append(t_parsed **aux, t_parsed **tokens,
+int	ft_write_append(t_parsed **aux, t_parsed **tokens,
 				int num_com, int flag)
 {
 	int			fd;
@@ -79,7 +63,7 @@ static int	ft_write_append(t_parsed **aux, t_parsed **tokens,
 	return (fd);
 }
 
-static int	ft_input(t_parsed **aux, t_parsed **tokens, int num_com)
+int	ft_input(t_parsed **aux, t_parsed **tokens, int num_com)
 {
 	int			fd;
 	t_parsed	*tmp;
@@ -108,7 +92,7 @@ static int	ft_input(t_parsed **aux, t_parsed **tokens, int num_com)
 	return (fd);
 }
 
-static int	ft_doc(t_parsed **aux, t_parsed **tokens, int num_com, int std_0)
+int	ft_doc(t_parsed **aux, t_parsed **tokens, int num_com, int std_0)
 {
 	int			pipe_fd[2];
 	int			status;

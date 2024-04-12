@@ -32,11 +32,9 @@ static t_envs	*ft_unset_variables(t_envs *envs,
 {
 	char	*key;
 	t_envs	*last;
-	t_envs	*temp;
 
 	if (!tokens)
-		return start;
-
+		return (start);
 	last = envs;
 	key = tokens->text;
 	envs = start;
@@ -48,19 +46,24 @@ static t_envs	*ft_unset_variables(t_envs *envs,
 		envs = envs->next;
 	}
 	if (envs)
+		ft_found(envs, key, &start, last);
+	return (ft_exec_unset(start, tokens->next));
+}
+
+void	ft_found(t_envs *envs, char *key, t_envs **start, t_envs *last)
+{
+	t_envs	*temp;
+
+	if (last == envs)
+		*start = envs->next;
+	else
+		last->next = envs->next;
+	if (!ft_strcmp(key, envs->key))
 	{
-		if (last == envs)
-			start = envs->next;
-		else
-			last->next = envs->next;
-		if (!ft_strcmp(key, envs->key))
-		{
-			temp = envs;
-			envs = envs->next;
-			ft_finish(temp);
-		}
+		temp = envs;
+		envs = envs->next;
+		ft_finish(temp);
 	}
-	return ft_exec_unset(start, tokens->next);
 }
 
 static void	ft_finish(t_envs *envs)

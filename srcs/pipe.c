@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:15:14 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/03 19:24:53 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/12 21:08:55 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,18 +90,15 @@ int	valid_tokens(t_parsed *tokens)
 		type = tokens->type;
 		if (type == PIPE)
 		{
-			if (!tokens->next || !tokens->prev || tokens->next->type == PIPE)
-			{
-				ft_putendl_fd("Invalid Pipe", 2);
-				g_signal = 2;
+			if (ft_invalid_pipe(tokens) == 0)
 				return (0);
-			}
 		}
 		else if (type != STRING)
 		{
 			if (!tokens->next || tokens->next->type != STRING)
 			{
-				ft_putendl_fd(" syntax error near unexpected token `newline'", 2);
+				ft_putendl_fd(" syntax error near unexpected token `newline'",
+					2);
 				g_signal = 2;
 				return (0);
 			}

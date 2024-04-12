@@ -6,13 +6,12 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:12:17 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/03/28 15:55:19 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/12 21:10:14 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-static int	ft_check_quotes_and_exp(char *str);
 static void	ft_expanding(t_parsed *tokens, char *new, char *tmp, t_envs *envs);
 
 t_parsed	*ft_expand_variables(t_parsed *tokens)
@@ -34,21 +33,27 @@ t_parsed	*ft_expand_variables(t_parsed *tokens)
 			tmp = NULL;
 			ft_expanding(aux, new, tmp, envs);
 			if (*aux->text == '\0')
-			{
-				if (aux->prev)                                // $DACAX echo thales
-					aux->prev->next = aux->next;
-				else
-					tokens = aux->next;
-				if (aux->next)							// $DACAX next = echo
-					aux->next->prev = aux->prev;		// aux->next->prev = dacax =
-				free(aux->text);
-				to_free = aux;
-			}
+				ft_void_text(&tokens, &aux, &to_free);
 		}
 		aux = aux->next;
 		free(to_free);
 	}
 	return (tokens);
+}
+
+void	ft_void_text(t_parsed **aux, t_parsed **to_free, t_parsed **tokens)
+{
+	if (*aux && *tokens && *to_free)
+	{
+		if ((*aux)->prev)
+			(*aux)->prev->next = (*aux)->next;
+		else
+			*tokens = (*aux)->next;
+		if ((*aux)->next)
+			(*aux)->next->prev = (*aux)->prev;
+		free((*aux)->text);
+		*to_free = *aux;
+	}
 }
 
 static void	ft_expanding(t_parsed *tokens, char *new, char *tmp, t_envs *envs)
@@ -61,11 +66,8 @@ static void	ft_expanding(t_parsed *tokens, char *new, char *tmp, t_envs *envs)
 	klen = ft_key_len(tokens->text);
 	tmp = ft_substr(tokens->text, 0, before_len);
 	point = tokens->text + before_len + 1;
-	if (!ft_strncmp(point, "?", 1))
-	{
-		ft_expand_question_mark(tokens, new, tmp);
+	if (!ft_strncmp(point, "?", 1) && ft_expand_question_mark(tokens, new, tmp))
 		return ;
-	}
 	while (envs && ft_strncmp(point, envs->key, ft_strlen(envs->key)) != 0)
 		envs = envs->next;
 	if (envs && envs->value)
@@ -110,22 +112,4 @@ int	ft_before_exp(char *str)
 	while (str[i] && str[i] != '$')
 		i++;
 	return (i);
-}
-
-static int	ft_check_quotes_and_exp(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (str[0] == '\'')
-		return (0);
-	while (str[i])
-	{
-		if (str[i] == '$' && (!str[i + 1] || str[i + 1] == ' ' || str[i + 1] == '\"')) // added (!str[i + 1] || str[i + 1] == ' ' || str[i + 1] == '\"')) to solve 'Test  13' and 'Test 17' from tester online
-			return (0);
-		else if (str[i] == '$')
-			return (1);
-		i++;
-	}
-	return (0);
 }
