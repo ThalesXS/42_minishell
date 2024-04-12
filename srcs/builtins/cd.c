@@ -20,8 +20,11 @@ void	ft_exec_cd(t_parsed *tokens, t_envs *envs)
 	char	curr_dir[PATH_MAX];
 	char	old_pwd[PATH_MAX];
 	char 	*helper_pwd;
+	char 	*helper2;
 	char	*args;
+	t_envs	*head;
 
+	head = envs;
 	if (tokens && tokens->next)
 	{
 		ft_putendl_fd(" too many arguments", 2);
@@ -56,17 +59,16 @@ void	ft_exec_cd(t_parsed *tokens, t_envs *envs)
 	}
 	else
 	{
-		// ja funciona mas tenho que verificar se nas envs atualiza o old pwd com a pasta de merda que foi apagada
-		while (envs)
+		while (head)
 		{
-			if (!ft_strcmp(envs->key, "OLDPWD"))
-			{
-				helper_pwd = ft_strdup(envs->value);
-				chdir(helper_pwd);
-				free(helper_pwd);
-			}
-			envs = envs->next;
+			if (!ft_strcmp(head->key, "OLDPWD"))
+				helper_pwd = ft_strdup(head->value);
+			if (!ft_strcmp(head->key, "PWD"))
+				helper2 = ft_strdup(head->value);
+			head = head->next;
 		}
+		chdir(helper_pwd);
+		ft_update_curr_dir(envs, helper_pwd, helper2);
 	}
 }
 
