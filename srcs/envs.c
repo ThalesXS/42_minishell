@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:00:28 by pabernar          #+#    #+#             */
-/*   Updated: 2024/04/12 19:46:45 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:15:04 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,28 +107,28 @@ char	**ft_array_envs(t_envs *envs)
 	return (arr);
 }
 
-t_envs	*ft_create_envs_for_export(t_envs *new, char **new_envs)
+t_envs *ft_create_envs_for_export(t_envs *new, char **new_envs)
 {
-	t_envs	*start;
-	char	*helper_value;
-	char	*helper_key;
+    t_envs		*start;
+    char		*helper_value;
+    char		*helper_key;
 
-	new = ft_return_new_env(new, new_envs);
-	start = new;
-	while (new->next)
-	{
-		if (ft_strcmp(new->next->key, new->key) < 0)
-		{
-			helper_key = new->next->key;
-			helper_value = new->next->value;
-			new->next->key = new->key;
-			new->next->value = new->value;
-			new->value = helper_value;
-			new->key = helper_key;
-			new = start;
-			continue ;
-		}
-		new = new->next;
-	}
-	return (start);
+    new = ft_return_new_env(new, new_envs);
+    start = new;
+    while (new->next)
+    {
+        if (ft_strcmp(new->next->key, new->key) < 0)
+        {
+            helper_key = new->next->key;
+            helper_value = new->next->value;
+            new->next->key = new->key;
+            new->next->value = new->value;
+            new->value = helper_value;
+            new->key = helper_key;
+            new = start;
+            continue;
+        }
+        new = new->next;
+    }
+    return (start);
 }

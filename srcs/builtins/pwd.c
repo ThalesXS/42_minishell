@@ -12,7 +12,7 @@
 
 #include "../../headers/minishell.h"
 
-void	ft_exec_pwd(void)
+void	ft_exec_pwd()
 {
 	t_envs	*envs;
 	char	*curr_dir;
@@ -23,12 +23,12 @@ void	ft_exec_pwd(void)
 	{
 		while (envs)
 		{
-			if (!ft_strcmp(envs->key, "PWD"))
-			{
-				curr_dir = ft_strdup(envs->value);
-				printf("%s\n", curr_dir);
-			}
-			envs = envs->next;
+			 if (!ft_strcmp(envs->key, "PWD"))
+			 {
+				 curr_dir = ft_strdup(envs->value);
+				 printf("%s\n",curr_dir);
+			 }
+			 envs = envs->next;
 		}
 	}
 	else

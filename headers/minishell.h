@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:06:26 by pabernar          #+#    #+#             */
-/*   Updated: 2024/04/12 21:11:45 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/11 16:51:41 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ t_envs				*ft_create_envs(char **envp);
 t_envs				*ft_new_env(char *str);
 t_envs				*ft_add_env(t_envs *envs, t_envs *new);
 char				**ft_array_envs(t_envs *envs);
-t_envs				*ft_create_envs_for_export(t_envs *new, char **new_envs);
+t_envs 				*ft_create_envs_for_export(t_envs *new, char **new_envs);
 /* ************************************************************************** */
 /*				api.c						   */
 /* ************************************************************************** */
@@ -143,8 +143,7 @@ t_parsed			**ft_save_commands(t_parsed **commands);
 /* ************************************************************************** */
 /*				builtins.c					   */
 /* ************************************************************************** */
-void				ft_exec_builtins(t_parsed *tokens,
-						t_parsed **commands, int total_com);
+void    ft_exec_builtins(t_parsed *tokens, t_parsed **commands, int total_com);
 /* ************************************************************************** */
 /*				echo.c					   */
 /* ************************************************************************** */
@@ -156,12 +155,11 @@ void				ft_exec_cd(t_parsed *tokens, t_envs *envs);
 /* ************************************************************************** */
 /*				pwd.c					   */
 /* ************************************************************************** */
-void				ft_exec_pwd(void);
+void				ft_exec_pwd();
 /* ************************************************************************** */
 /*				export.c					   */
 /* ************************************************************************** */
-t_envs				*ft_exec_export(t_envs *envs,
-						t_parsed *tokens, int total_com);
+t_envs				*ft_exec_export(t_envs *envs, t_parsed *tokens, int total_com);
 /* ************************************************************************** */
 /*				unset.c					   */
 /* ************************************************************************** */
@@ -170,9 +168,9 @@ t_envs				*ft_exec_unset(t_envs *envs, t_parsed *tokens);
 /*				env.c					   */
 /* ************************************************************************** */
 void				ft_exec_env(t_envs *envs);
-void				ft_exec_declare_env(t_envs *envs);
-t_envs				*ft_return_new_env(t_envs *new, char **new_envs);
-int					ft_expand_question_mark(t_parsed *tokens,
+void                ft_exec_declare_env(t_envs *envs);
+t_envs   			 *ft_return_new_env(t_envs *new, char **new_envs);
+void				ft_expand_question_mark(t_parsed *tokens,
 						char *new, char *tmp);
 /* ************************************************************************** */
 /*				exit.c					   	      */
@@ -181,8 +179,7 @@ int					ft_expand_question_mark(t_parsed *tokens,
 /**
  * @brief Free the memory and exit the program.
  */
-void				ft_exit(t_parsed *tokens, t_parsed *force_signal,
-						t_parsed **commands, int total_com);
+void    ft_exit(t_parsed *tokens, t_parsed *force_signal, t_parsed **commands, int total_com);
 
 /* ************************************************************************** */
 /*				signal_handlers.c				   */
@@ -235,11 +232,7 @@ pid_t				ft_manage_heredoc(int pipe_fd[2], char *heredoc,
 						int std_0, t_parsed **tokens);
 int					ft_redirect(t_parsed **tokens, int num_com, int std_0);
 void				ft_in_doc(int pipe_fd[2], char *heredoc);
-int					ft_write_append(t_parsed **aux, t_parsed **tokens,
-						int num_com, int flag);
-int					ft_input(t_parsed **aux, t_parsed **tokens, int num_com);
-int					ft_doc(t_parsed **aux, t_parsed **tokens,
-						int num_com, int std_0);
+
 /* ************************************************************************** */
 /*									free.c							*/
 /* ************************************************************************** */
@@ -247,20 +240,6 @@ int					ft_doc(t_parsed **aux, t_parsed **tokens,
 void				ft_free_commands(t_parsed **commands, int total_com);
 void				ft_free_tokens(t_parsed *tokens);
 t_envs				*ft_free_envs(t_envs *envs);
-void				ft_free_array(char **arr);
+void                ft_free_array(char **arr);
 
-// FIX FILE ORDER
-void				ft_io_reset(int *std_fd);
-int					ft_get_fd(t_parsed *aux, t_parsed **tokens,
-						int num_com, int std_0);
-int					ft_invalid_pipe(t_parsed *tokens);
-void				ft_void_text(t_parsed **aux, t_parsed **to_free,
-						t_parsed **tokens);
-void				ft_define_error(char *command, struct stat path_stat);
-void				ft_head_cd(t_envs *head, t_envs *envs);
-void				ft_test_dir(char *args, t_envs *envs, char *curr_dir,
-						char *old_pwd);
-void				ft_found(t_envs *envs, char *key,
-						t_envs **start, t_envs *last);
-int					ft_check_quotes_and_exp(char *str);
 #endif

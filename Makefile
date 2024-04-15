@@ -38,8 +38,7 @@ expander.c \
 treat_token.c \
 pipe.c \
 redirect.c \
-free.c \
-extras.c
+free.c 
 SRCS_DIR = srcs/
 OBJS = $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 OBJS_DIR = objs/

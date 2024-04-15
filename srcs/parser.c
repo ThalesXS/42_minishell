@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 09:37:04 by pabernar          #+#    #+#             */
-/*   Updated: 2024/04/12 21:07:51 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:36:52 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ static int		ft_count_pipe(t_parsed *tokens);
 static void		ft_overpipe(t_parsed **tokens, int *num_com);
 static void		ft_disconect(t_parsed *aux);
 
-void	ft_parser(t_parsed *tokens)
+void    ft_parser(t_parsed *tokens)
 {
-	t_parsed	**commands;
-	int			num_com[2];
-	int			red_sig;
-	int			std_fd[2];
-	pid_t		parent;
+	t_parsed    **commands;
+	int            num_com[2];
+	int            red_sig;
+	int            std_fd[2];
+	pid_t        parent;
 
 	parent = getpid();
 	std_fd[0] = dup(0);
@@ -34,7 +34,10 @@ void	ft_parser(t_parsed *tokens)
 	red_sig = ft_redirect(commands, num_com[0], std_fd[0]);
 	if (red_sig != -1 && commands[num_com[0]])
 		ft_exec_builtins(commands[num_com[0]], commands, num_com[1]);
-	ft_io_reset(std_fd);
+	dup2(std_fd[0], 0);
+	dup2(std_fd[1], 1);
+	close(std_fd[0]);
+	close(std_fd[1]);
 	ft_free_commands(commands, num_com[1]);
 	num_com[0] = g_signal;
 	if (getpid() != parent)

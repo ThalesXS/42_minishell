@@ -19,6 +19,8 @@ void	ft_exec_cd(t_parsed *tokens, t_envs *envs)
 {
 	char	curr_dir[PATH_MAX];
 	char	old_pwd[PATH_MAX];
+	char 	*helper_pwd;
+	char 	*helper2;
 	char	*args;
 	t_envs	*head;
 
@@ -34,50 +36,40 @@ void	ft_exec_cd(t_parsed *tokens, t_envs *envs)
 	else
 		args = NULL;
 	if (getcwd(old_pwd, sizeof(old_pwd)))
-		ft_test_dir(args, envs, curr_dir, old_pwd);
+	{
+		if (args == NULL || !ft_strcmp(args, "~"))
+		{
+			ft_get_home_dir(envs);
+			if (getcwd(curr_dir, sizeof(curr_dir)))
+				ft_update_curr_dir(envs, curr_dir, old_pwd);
+		}
+		else if (!chdir(args))
+		{
+			if (getcwd(curr_dir, sizeof(curr_dir)))
+				ft_update_curr_dir(envs, curr_dir, old_pwd);
+		}
+		else
+		{
+			if (errno == 13)
+				ft_putendl_fd(" Permission denied", 2);
+			else if(errno == 2)	
+				ft_putendl_fd(" No such file or directory", 2);
+			g_signal = 1;
+		}
+	}
 	else
-		ft_head_cd(head, envs);
-}
-
-void	ft_test_dir(char *args, t_envs *envs, char *curr_dir, char *old_pwd)
-{
-	if (args == NULL || !ft_strcmp(args, "~"))
 	{
-		ft_get_home_dir(envs);
-		if (getcwd(curr_dir, sizeof(curr_dir)))
-			ft_update_curr_dir(envs, curr_dir, old_pwd);
+		while (head)
+		{
+			if (!ft_strcmp(head->key, "OLDPWD"))
+				helper_pwd = ft_strdup(head->value);
+			if (!ft_strcmp(head->key, "PWD"))
+				helper2 = ft_strdup(head->value);
+			head = head->next;
+		}
+		chdir(helper_pwd);
+		ft_update_curr_dir(envs, helper_pwd, helper2);
 	}
-	else if (!chdir(args))
-	{
-		if (getcwd(curr_dir, sizeof(curr_dir)))
-			ft_update_curr_dir(envs, curr_dir, old_pwd);
-	}
-	else
-	{
-		if (errno == 13)
-			ft_putendl_fd(" Permission denied", 2);
-		else if (errno == 2)
-			ft_putendl_fd(" No such file or directory", 2);
-		g_signal = 1;
-	}
-}
-
-void	ft_head_cd(t_envs *head, t_envs *envs)
-{
-	char	*helper_pwd[2];
-
-	helper_pwd[0] = NULL;
-	helper_pwd[1] = NULL;
-	while (head)
-	{
-		if (!ft_strcmp(head->key, "OLDPWD"))
-			helper_pwd[0] = ft_strdup(head->value);
-		if (!ft_strcmp(head->key, "PWD"))
-			helper_pwd[1] = ft_strdup(head->value);
-		head = head->next;
-	}
-	if (!chdir(helper_pwd[0]))
-		ft_update_curr_dir(envs, helper_pwd[0], helper_pwd[1]);
 }
 
 static void	ft_update_curr_dir(t_envs *envs, char *curr_dir, char *old_pwd)
