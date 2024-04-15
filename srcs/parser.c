@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 09:37:04 by pabernar          #+#    #+#             */
-/*   Updated: 2024/04/10 16:36:52 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/15 19:29:42 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,21 @@ static int		ft_count_pipe(t_parsed *tokens);
 static void		ft_overpipe(t_parsed **tokens, int *num_com);
 static void		ft_disconect(t_parsed *aux);
 
-void    ft_parser(t_parsed *tokens)
+void	ft_parser(t_parsed *tokens)
 {
-	t_parsed    **commands;
-	int            num_com[2];
-	int            red_sig;
-	int            std_fd[2];
-	pid_t        parent;
+	t_parsed	**commands;
+	int			num_com[2];
+	int			red_sig;
+	int			std_fd[2];
+	pid_t		parent;
+	pid_t		child;
 
 	parent = getpid();
 	std_fd[0] = dup(0);
 	std_fd[1] = dup(1);
 	commands = ft_commands(tokens, &num_com[1]);
 	num_com[0] = 0;
-	ft_pipe(&num_com[0], num_com[1], parent);
+	child = ft_pipe(&num_com[0], num_com[1]);
 	red_sig = ft_redirect(commands, num_com[0], std_fd[0]);
 	if (red_sig != -1 && commands[num_com[0]])
 		ft_exec_builtins(commands[num_com[0]], commands, num_com[1]);
@@ -40,13 +41,17 @@ void    ft_parser(t_parsed *tokens)
 	close(std_fd[1]);
 	ft_free_commands(commands, num_com[1]);
 	num_com[0] = g_signal;
-	if (getpid() != parent)
+
+	if (child)
+		waitpid(child, &g_signal, 0);
+	else if (getpid() != parent)
 		ft_exit(NULL, NULL, NULL, 0);
-	else
-		waitpid(-1, &g_signal, 0);
+	if (getpid() != parent)
+		ft_exit(NULL, NULL, NULL, g_signal);
+	/* else
+		waitpid(child, &g_signal, 0); */
 	if (num_com[0] != 0 && g_signal == 0 && red_sig != -1)
 		g_signal = num_com[0];
-	usleep(1000);
 }
 
 static t_parsed	**ft_commands(t_parsed *tokens, int *num_com)

@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:12:17 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/03/28 15:55:19 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/15 19:51:08 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,19 @@
 
 static int	ft_check_quotes_and_exp(char *str);
 static void	ft_expanding(t_parsed *tokens, char *new, char *tmp, t_envs *envs);
+
+int	ft_prev_is_redirect(t_parsed *aux)
+{
+	if (aux->prev == NULL)
+		return (0);
+	else if (aux->prev->type == RD_OVERWRITE
+		|| aux->prev->type == RD_APPEND
+		|| aux->prev->type == RD_INPUT
+		|| aux->prev->type == RD_HEREDOC)
+		return (1);
+	else
+		return (0);
+}
 
 t_parsed	*ft_expand_variables(t_parsed *tokens)
 {
@@ -27,11 +40,13 @@ t_parsed	*ft_expand_variables(t_parsed *tokens)
 	while (aux && aux->text)
 	{
 		to_free = NULL;
-		while (ft_check_quotes_and_exp(aux->text))
+		while (aux && ft_check_quotes_and_exp(aux->text))
 		{
 			envs = return_envs(0);
 			new = NULL;
 			tmp = NULL;
+			if (ft_prev_is_redirect(aux))
+				break;
 			ft_expanding(aux, new, tmp, envs);
 			if (*aux->text == '\0')
 			{
@@ -43,9 +58,11 @@ t_parsed	*ft_expand_variables(t_parsed *tokens)
 					aux->next->prev = aux->prev;		// aux->next->prev = dacax =
 				free(aux->text);
 				to_free = aux;
+				aux = aux->next;
 			}
 		}
-		aux = aux->next;
+		if (!to_free)
+			aux = aux->next;
 		free(to_free);
 	}
 	return (tokens);

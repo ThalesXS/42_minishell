@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 22:57:18 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/03/26 14:01:28 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:50:55 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void    ft_exec_builtins(t_parsed *tokens, t_parsed **commands, int total_com)
 	else if (!ft_strcmp(tokens->text, "unset") || !ft_strcmp(tokens->text,
 															 "\\unset"))
 		envs = ft_exec_unset(envs, tokens->next);
-	else if (!ft_strcmp(tokens->text, "env")
+	/* else if (!ft_strcmp(tokens->text, "env")
 			 || !ft_strcmp(tokens->text, "\\env"))
-		ft_exec_env(envs);
+		ft_exec_env(envs); */
 	else if (!ft_strcmp(tokens->text, "exit")
 			 || !ft_strcmp(tokens->text, "\\exit"))
 		ft_exit(NULL, tokens->next, commands, total_com);

@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:15:14 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/03 19:24:53 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:44:22 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 static void	ft_child(int *pipe_fd);
 static void	ft_parent(int *pipe_fd);
 
-void	ft_pipe(int *num_com, int total_com, pid_t parent)
+pid_t	ft_pipe(int *num_com, int total_com)
 {
 	int		pipe_fd[2];
 	int		status;
 	pid_t	pid;
 
-	pid = parent;
+	pid = 0;
 	if (*num_com < total_com - 1)
 	{
 		status = pipe(pipe_fd);
@@ -32,11 +32,12 @@ void	ft_pipe(int *num_com, int total_com, pid_t parent)
 		{
 			ft_child(pipe_fd);
 			(*num_com)++;
-			ft_pipe(num_com, total_com, pid);
+			pid = ft_pipe(num_com, total_com);
 		}
 		else
 			ft_parent(pipe_fd);
 	}
+	return (pid);
 }
 
 static void	ft_parent(int *pipe_fd)
