@@ -22,20 +22,11 @@ void	ft_executer(char *command, char **new_array,
 	if (execve(command, new_array, array_env) == -1)
 	{
 		if (strncmp(command, "./", 2) && strncmp(command, "/", 1))
-		{
-			ft_putendl_fd(" command not found", 2);
-			g_signal = 127;
-		}
+			ft_err_msg(" command not found", 127);
 		else if (S_ISDIR(path_stat.st_mode))
-		{
-			ft_putendl_fd(" Is a directory", 2);
-			g_signal = 126;
-		}
+			ft_err_msg(" Is a directory", 126);
 		else
-		{
-			ft_putendl_fd(" command not found", 2);
-			g_signal = 127;
-		}
+			ft_err_msg(" command not found", 127);
 		free_splits(new_array);
 		free_splits(array_env);
 		ft_exit(tokens, NULL, NULL, 0);
@@ -56,4 +47,10 @@ void	ft_save_exit_status(int status, t_envs *envs)
 	key = ft_strjoin("?=", exit_status);
 	envs = ft_add_env(envs, ft_new_env(key));
 	free(exit_status);
+}
+
+void ft_err_msg(char *error, int signal)
+{
+	ft_putendl_fd(error, 2);
+	g_signal = signal;
 }

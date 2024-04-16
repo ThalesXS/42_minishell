@@ -36,11 +36,12 @@ int	ft_redirect(t_parsed **tokens, int num_com, int std_0)
 			fd = ft_input(&aux, tokens, num_com);
 		else if (aux->type == RD_HEREDOC)
 			fd = ft_doc(&aux, tokens, num_com, std_0);
-		if (fd == -1)
-			ft_putendl_fd(" No such file or directory", 2);
 		if (fd <= -1)
 		{
-			g_signal = 1;
+			if (errno == 13)
+				ft_err_msg(" Permission denied", 1);
+			else
+				ft_err_msg(" No such file or directory", 1);
 			return (-1);
 		}
 		if (aux)

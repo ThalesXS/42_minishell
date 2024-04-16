@@ -242,4 +242,7 @@ void				ft_free_tokens(t_parsed *tokens);
 t_envs				*ft_free_envs(t_envs *envs);
 void                ft_free_array(char **arr);
 
+
+/*utils*/
+void				ft_err_msg(char *error, int signal);
 #endif

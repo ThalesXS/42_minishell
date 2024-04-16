@@ -110,15 +110,10 @@ void	ft_find_path(t_parsed *token, t_envs *envs)
 	else
 	{
 		if (access(command, F_OK) && (!strncmp(command, "/", 1) || !strncmp(command, "./", 2)))
-			ft_putendl_fd(" No such file or directory", 2);
+			ft_err_msg(" No such file or directory", 127);
 		else if (access(command, X_OK) && (!strncmp(command, "/", 1) || !strncmp(command, "./", 2)))
-		{
-			ft_putendl_fd(" Permission denied", 2);
-			g_signal = 126;
-			return ;
-		}
+			ft_err_msg(" Permission denied", 126);
 		else
-			ft_putendl_fd(" command not found", 2);
-		g_signal = 127;
+			ft_err_msg(" command not found", 127);
 	}
 }
