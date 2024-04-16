@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 15:19:48 by hescoval          #+#    #+#             */
-/*   Updated: 2024/02/26 20:50:07 by txisto-d         ###   ########.fr       */
+/*   Created: 2024/04/16 17:19:22 by dmeirele          #+#    #+#             */
+/*   Updated: 2024/04/16 17:19:22 by dmeirele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

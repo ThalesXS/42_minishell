@@ -12,12 +12,14 @@
 
 #include "../../headers/minishell.h"
 
-static void	ft_forced_signal_exit(t_parsed **commands, int total_com, int sig_value);
+static void	ft_forced_signal_exit(t_parsed **commands, int total_com,
+				int sig_value);
 static int	ft_check_numeric_argument(t_parsed *force_signal);
 
-void    ft_exit(t_parsed *tokens, t_parsed *force_signal, t_parsed **commands, int total_com)
+void	ft_exit(t_parsed *tokens, t_parsed *force_signal, t_parsed **commands,
+		int total_com)
 {
-	int    sig_value;
+	int	sig_value;
 
 	if (force_signal)
 	{
@@ -40,7 +42,8 @@ void    ft_exit(t_parsed *tokens, t_parsed *force_signal, t_parsed **commands, i
 	ft_forced_signal_exit(commands, total_com, sig_value);
 }
 
-static void	ft_forced_signal_exit(t_parsed **commands, int total_com, int sig_value)
+static void	ft_forced_signal_exit(t_parsed **commands, int total_com,
+		int sig_value)
 {
 	ft_free_envs(return_envs(0));
 	if (commands && total_com)
@@ -50,10 +53,10 @@ static void	ft_forced_signal_exit(t_parsed **commands, int total_com, int sig_va
 
 static int	ft_check_numeric_argument(t_parsed *force_signal)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if (force_signal->text[0] == '-' || force_signal->text[0] == '+' )
+	if (force_signal->text[0] == '-' || force_signal->text[0] == '+')
 		i++;
 	while (force_signal->text[i])
 	{

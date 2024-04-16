@@ -13,8 +13,8 @@
 #include "../../headers/minishell.h"
 
 static void		ft_finish(t_envs *envs);
-static t_envs	*ft_unset_variables(t_envs *envs,
-					t_envs *start, t_parsed *tokens);
+static t_envs	*ft_unset_variables(t_envs *envs, t_envs *start,
+					t_parsed *tokens);
 
 t_envs	*ft_exec_unset(t_envs *envs, t_parsed *tokens)
 {
@@ -27,16 +27,15 @@ t_envs	*ft_exec_unset(t_envs *envs, t_parsed *tokens)
 	return (start);
 }
 
-static t_envs	*ft_unset_variables(t_envs *envs,
-					t_envs *start, t_parsed *tokens)
+static t_envs	*ft_unset_variables(t_envs *envs, t_envs *start,
+		t_parsed *tokens)
 {
 	char	*key;
 	t_envs	*last;
 	t_envs	*temp;
 
 	if (!tokens)
-		return start;
-
+		return (start);
 	last = envs;
 	key = tokens->text;
 	envs = start;
@@ -60,7 +59,7 @@ static t_envs	*ft_unset_variables(t_envs *envs,
 			ft_finish(temp);
 		}
 	}
-	return ft_exec_unset(start, tokens->next);
+	return (ft_exec_unset(start, tokens->next));
 }
 
 static void	ft_finish(t_envs *envs)

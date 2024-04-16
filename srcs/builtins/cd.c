@@ -6,7 +6,7 @@
 /*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 22:57:13 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/02/11 11:47:08 by dmeirele         ###   ########.fr       */
+/*   Updated: 2024/04/16 19:19:22 by dmeirele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,48 @@
 
 static void	ft_update_curr_dir(t_envs *envs, char *curr_dir, char *old_pwd);
 static void	ft_get_home_dir(t_envs *envs);
+static int	ft_change_directory(char *args, t_envs *envs);
+static void	ft_change_directory_exception(t_envs *head, t_envs *envs);
 
 void	ft_exec_cd(t_parsed *tokens, t_envs *envs)
 {
-	char	curr_dir[PATH_MAX];
-	char	old_pwd[PATH_MAX];
-	char 	*helper_pwd;
-	char 	*helper2;
 	char	*args;
 	t_envs	*head;
 
 	head = envs;
 	if (tokens && tokens->next)
 	{
-		ft_putendl_fd(" too many arguments", 2);
-		g_signal = 1;
+		ft_err_msg(" too many arguments", 1);
 		return ;
 	}
 	if (tokens)
 		args = tokens->text;
 	else
 		args = NULL;
+	if (!ft_change_directory(args, envs))
+		ft_change_directory_exception(head, envs);
+}
+
+static void	ft_change_directory_exception(t_envs *head, t_envs *envs)
+{
+	char	*helper[2];
+
+	while (head)
+	{
+		if (!ft_strcmp(head->key, "OLDPWD"))
+			helper[0] = ft_strdup(head->value);
+		if (!ft_strcmp(head->key, "PWD"))
+			helper[1] = ft_strdup(head->value);
+		head = head->next;
+	}
+	ft_update_curr_dir(envs, helper[0], helper[1]);
+}
+
+static int	ft_change_directory(char *args, t_envs *envs)
+{
+	char	old_pwd[PATH_MAX];
+	char	curr_dir[PATH_MAX];
+
 	if (getcwd(old_pwd, sizeof(old_pwd)))
 	{
 		if (args == NULL || !ft_strcmp(args, "~"))
@@ -51,25 +72,13 @@ void	ft_exec_cd(t_parsed *tokens, t_envs *envs)
 		else
 		{
 			if (errno == 13)
-				ft_putendl_fd(" Permission denied", 2);
-			else if(errno == 2)	
-				ft_putendl_fd(" No such file or directory", 2);
-			g_signal = 1;
+				ft_err_msg(" Permission denied", 1);
+			else if (errno == 2)
+				ft_err_msg(" No such file or directory", 1);
 		}
+		return (1);
 	}
-	else
-	{
-		while (head)
-		{
-			if (!ft_strcmp(head->key, "OLDPWD"))
-				helper_pwd = ft_strdup(head->value);
-			if (!ft_strcmp(head->key, "PWD"))
-				helper2 = ft_strdup(head->value);
-			head = head->next;
-		}
-		chdir(helper_pwd);
-		ft_update_curr_dir(envs, helper_pwd, helper2);
-	}
+	return (0);
 }
 
 static void	ft_update_curr_dir(t_envs *envs, char *curr_dir, char *old_pwd)

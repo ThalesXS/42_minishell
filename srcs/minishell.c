@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/25 09:24:42 by pabernar          #+#    #+#             */
-/*   Updated: 2024/04/11 16:27:19 by txisto-d         ###   ########.fr       */
+/*   Created: 2024/04/16 17:19:11 by dmeirele          #+#    #+#             */
+/*   Updated: 2024/04/16 17:19:11 by dmeirele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
