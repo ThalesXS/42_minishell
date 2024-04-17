@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:18:28 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/16 17:18:28 by dmeirele         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:53:38 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,36 @@
 
 t_envs	*ft_create_envs(char **envp)
 {
-	t_envs		*envs;
+	t_envs	*envs;
 
 	envs = 0;
 	if (!envp)
 		return (NULL);
 	while (*envp)
 	{
-		envs = ft_add_env(envs, ft_new_env(*envp));
+		if (!ft_strncmp(*envp, "SHLVL=", 6))
+			ft_mslvl(envs, *envp);
+		else
+			envs = ft_add_env(envs, ft_new_env(*envp));
 		envp++;
 	}
 	return (envs);
 }
+void	ft_mslvl(t_envs *envs, char *envp)
+{
+	char	*mslvl;
+	int		value;
+	char	*temp;
+
+	value = ft_atoi(&envp[6]);
+	value++;
+	temp = ft_itoa(value);
+	mslvl = ft_strjoin("SHLVL=", temp);
+	free(temp);
+	ft_add_env(envs, ft_new_env(mslvl));
+	free(mslvl);
+}
+
 
 t_envs	*ft_new_env(char *str)
 {

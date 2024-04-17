@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:15:14 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/15 18:44:22 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/17 19:24:54 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	ft_child(int *pipe_fd)
 }
 
 pid_t	ft_manage_heredoc(int pipe_fd[2], char *heredoc,
-			int std_0, t_parsed **tokens)
+			int *std_fd, t_parsed **tokens)
 {
 	pid_t	pid;
 
@@ -65,7 +65,8 @@ pid_t	ft_manage_heredoc(int pipe_fd[2], char *heredoc,
 	{
 		ft_save_commands(tokens);
 		ft_doc_signals();
-		dup2(std_0, 0);
+		dup2(std_fd[0], 0);
+		dup2(std_fd[1], 1);
 		ft_in_doc(pipe_fd, heredoc);
 		ft_free_commands(tokens, 1);
 		ft_exit(NULL, NULL, NULL, 0);

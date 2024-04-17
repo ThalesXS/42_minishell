@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:08:49 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/09 14:18:06 by dmeirele         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:13:19 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 static int	ft_write_append(t_parsed **aux, t_parsed **tokens,
 				int num_com, int flag);
 static int	ft_input(t_parsed **aux, t_parsed **tokens, int num_com);
-static int	ft_doc(t_parsed **aux, t_parsed **tokens, int num_com, int std_0);
+static int	ft_doc(t_parsed **aux, t_parsed **tokens, int num_com, int *std_fd);
 
-int	ft_redirect(t_parsed **tokens, int num_com, int std_0)
+int	ft_redirect(t_parsed **tokens, int num_com, int *std_fd)
 {
 	t_parsed	*aux;
 	int			fd;
 
 	aux = tokens[num_com];
-	fd = 1;
-	while (aux)
+	while (aux && aux->next)
 	{
+		fd = 1;
 		if (aux->type == RD_OVERWRITE)
 			fd = ft_write_append(&aux, tokens,
 					num_com, O_WRONLY | O_CREAT | O_TRUNC);
@@ -35,7 +35,7 @@ int	ft_redirect(t_parsed **tokens, int num_com, int std_0)
 		else if (aux->type == RD_INPUT)
 			fd = ft_input(&aux, tokens, num_com);
 		else if (aux->type == RD_HEREDOC)
-			fd = ft_doc(&aux, tokens, num_com, std_0);
+			fd = ft_doc(&aux, tokens, num_com, std_fd);
 		if (fd <= -1)
 		{
 			if (errno == 13)
@@ -44,7 +44,7 @@ int	ft_redirect(t_parsed **tokens, int num_com, int std_0)
 				ft_err_msg(" No such file or directory", 1);
 			return (-1);
 		}
-		if (aux)
+		if (aux && aux->next && fd == 1)
 			aux = aux->next;
 	}
 	return (fd);
@@ -74,7 +74,11 @@ static int	ft_write_append(t_parsed **aux, t_parsed **tokens,
 			(*aux)->prev = tmp;
 	}
 	else
+	{
 		tokens[num_com] = *aux;
+		if (*aux)
+			(*aux)->prev = NULL;
+	}
 	ft_free_tokens(free_me);
 	*aux = tokens[num_com];
 	return (fd);
@@ -103,13 +107,18 @@ static int	ft_input(t_parsed **aux, t_parsed **tokens, int num_com)
 			(*aux)->prev = tmp;
 	}
 	else
+	{
+
 		tokens[num_com] = *aux;
+		if (*aux)
+			(*aux)->prev = NULL;
+	}
 	ft_free_tokens(free_me);
 	*aux = tokens[num_com];
 	return (fd);
 }
 
-static int	ft_doc(t_parsed **aux, t_parsed **tokens, int num_com, int std_0)
+static int	ft_doc(t_parsed **aux, t_parsed **tokens, int num_com, int *std_fd)
 {
 	int			pipe_fd[2];
 	int			status;
@@ -123,7 +132,7 @@ static int	ft_doc(t_parsed **aux, t_parsed **tokens, int num_com, int std_0)
 	status = pipe(pipe_fd);
 	if (status == -1)
 		ft_putendl_fd("Error creating pipe", 2);
-	pid = ft_manage_heredoc(pipe_fd, free_me->next->text, std_0, tokens);
+	pid = ft_manage_heredoc(pipe_fd, free_me->next->text, std_fd, tokens);
 	free_me->next->next = NULL;
 	if (tmp)
 	{
@@ -132,7 +141,10 @@ static int	ft_doc(t_parsed **aux, t_parsed **tokens, int num_com, int std_0)
 			(*aux)->prev = tmp;
 	}
 	else
+	{
 		tokens[num_com] = *aux;
+		(*aux)->prev = NULL;
+	}
 	ft_free_tokens(free_me);
 	return (pid);
 }

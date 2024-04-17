@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:18:21 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/02/20 11:30:55 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:18:59 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,31 @@ static void	ft_unite(t_parsed *token);
 
 void	ft_treat_token(t_parsed **tokens, char *line)
 {
+	char		*temp;
+	t_parsed	*aux;
+	t_parsed	*have_pipe;
+	t_envs		*envs;
+
+	envs = return_envs(NULL);
 	ft_check_unite(*tokens, line);
 	*tokens = ft_expand_variables(*tokens);
 	ft_treating(*tokens);
+	aux = *tokens;
+	while (aux && aux->next)
+		aux = aux->next;
+	have_pipe = *tokens;
+	while (have_pipe)
+	{
+		if (have_pipe->type == PIPE)
+			return ;
+		have_pipe = have_pipe->next;
+	}
+	if (aux)
+	{
+		temp = ft_strjoin("_=", aux->text);
+		ft_add_env(envs, ft_new_env(temp));
+		free(temp);
+	}
 }
 
 static void	ft_treating(t_parsed *tokens)

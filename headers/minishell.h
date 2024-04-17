@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:06:26 by pabernar          #+#    #+#             */
-/*   Updated: 2024/04/15 18:41:46 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:26:48 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,6 @@
 /* ************************************************************************** */
 /*				Structs						   */
 /* ************************************************************************** */
-/* *next -> if pipe. */
-
-typedef struct s_minish
-{
-	char			*command;
-	char			**args;
-	struct s_envs	*envs;
-	char			**redir_in;
-	char			**redir_out;
-	struct s_minish	*next;
-}					t_minish;
 
 typedef enum s_special
 {
@@ -126,6 +115,7 @@ t_envs				*ft_new_env(char *str);
 t_envs				*ft_add_env(t_envs *envs, t_envs *new);
 char				**ft_array_envs(t_envs *envs);
 t_envs 				*ft_create_envs_for_export(t_envs *new, char **new_envs);
+void				ft_mslvl(t_envs *envs, char *envp);
 /* ************************************************************************** */
 /*				api.c						   */
 /* ************************************************************************** */
@@ -229,8 +219,8 @@ int					valid_tokens(t_parsed *tokens);
 /*									redirect.c							*/
 /* ************************************************************************** */
 pid_t				ft_manage_heredoc(int pipe_fd[2], char *heredoc,
-						int std_0, t_parsed **tokens);
-int					ft_redirect(t_parsed **tokens, int num_com, int std_0);
+						int *std_fd, t_parsed **tokens);
+int					ft_redirect(t_parsed **tokens, int num_com, int *std_fd);
 void				ft_in_doc(int pipe_fd[2], char *heredoc);
 
 /* ************************************************************************** */
@@ -246,3 +236,6 @@ void                ft_free_array(char **arr);
 /*utils*/
 void				ft_err_msg(char *error, int signal);
 #endif
+
+
+//	====================				main.c				====================

@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:12:17 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/15 19:51:08 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:16:09 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static int	ft_check_quotes_and_exp(char *str);
 static void	ft_expanding(t_parsed *tokens, char *new, char *tmp, t_envs *envs);
+
+size_t	ft_envlen(char	*str);
 
 int	ft_prev_is_redirect(t_parsed *aux)
 {
@@ -83,7 +85,7 @@ static void	ft_expanding(t_parsed *tokens, char *new, char *tmp, t_envs *envs)
 		ft_expand_question_mark(tokens, new, tmp);
 		return ;
 	}
-	while (envs && ft_strncmp(point, envs->key, ft_strlen(envs->key)) != 0)
+	while (envs && ft_strncmp(point, envs->key, ft_envlen(point)) != 0)
 		envs = envs->next;
 	if (envs && envs->value)
 	{
@@ -98,6 +100,18 @@ static void	ft_expanding(t_parsed *tokens, char *new, char *tmp, t_envs *envs)
 	}
 	else
 		ft_farfaraway(tokens, klen, &new, &tmp);
+}
+
+size_t	ft_envlen(char	*str)
+{
+	size_t	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (ft_isalnum(str[i]))
+		i++;
+	return (i);
 }
 
 int	ft_key_len(char *str)

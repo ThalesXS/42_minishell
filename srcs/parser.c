@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:19:50 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/16 17:19:50 by dmeirele         ###   ########.fr       */
+/*   Updated: 2024/04/17 19:51:16 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_parser(t_parsed *tokens)
 	commands = ft_commands(tokens, &num_com[1]);
 	num_com[0] = 0;
 	child = ft_pipe(&num_com[0], num_com[1]);
-	red_sig = ft_redirect(commands, num_com[0], std_fd[0]);
+	red_sig = ft_redirect(commands, num_com[0], std_fd);
 	if (red_sig != -1 && commands[num_com[0]])
 		ft_exec_builtins(commands[num_com[0]], commands, num_com[1]);
 	dup2(std_fd[0], 0);
@@ -40,18 +40,13 @@ void	ft_parser(t_parsed *tokens)
 	close(std_fd[0]);
 	close(std_fd[1]);
 	ft_free_commands(commands, num_com[1]);
-	num_com[0] = g_signal;
-
 	if (child)
 		waitpid(child, &g_signal, 0);
-	else if (getpid() != parent)
-		ft_exit(NULL, NULL, NULL, 0);
+	//ft_printf("g_signal = %d\n", WEXITSTATUS(g_signal));
 	if (getpid() != parent)
-		ft_exit(NULL, NULL, NULL, g_signal);
-	/* else
-		waitpid(child, &g_signal, 0); */
-	if (num_com[0] != 0 && g_signal == 0 && red_sig != -1)
-		g_signal = num_com[0];
+		ft_exit(NULL, NULL, NULL, 0);
+	/* if (num_com[0] != 0 && g_signal == 0 && red_sig != -1)
+		g_signal = num_com[0]; */
 }
 
 static t_parsed	**ft_commands(t_parsed *tokens, int *num_com)

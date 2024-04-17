@@ -30,7 +30,7 @@ static void    ft_exec_command(char *command, t_parsed *tokens)
 	if (!new_process)
 		ft_executer(command, new_array, array_env, tokens);
 	ft_ignore_signals();
-	waitpid(-1, &g_signal, 0);
+	waitpid(new_process, &g_signal, 0);
 	if (g_signal == 131)
 		printf("Quit (core dumped)\n");
 	else if (g_signal == 2)
@@ -116,4 +116,5 @@ void	ft_find_path(t_parsed *token, t_envs *envs)
 		else
 			ft_err_msg(" command not found", 127);
 	}
+	free(command);
 }
