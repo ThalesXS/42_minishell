@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:08:49 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/17 18:13:19 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/17 22:03:49 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,25 @@ static int	ft_write_append(t_parsed **aux, t_parsed **tokens,
 static int	ft_input(t_parsed **aux, t_parsed **tokens, int num_com);
 static int	ft_doc(t_parsed **aux, t_parsed **tokens, int num_com, int *std_fd);
 
+static int	ft_what_red(t_parsed **aux, t_parsed **tokens,
+				int num_com, int *std_fd)
+{
+	int	fd;
+
+	fd = 1;
+	if ((*aux)->type == RD_OVERWRITE)
+		fd = ft_write_append(&(*aux), tokens,
+				num_com, O_WRONLY | O_CREAT | O_TRUNC);
+	else if ((*aux)->type == RD_APPEND)
+		fd = ft_write_append(&(*aux), tokens,
+				num_com, O_WRONLY | O_CREAT | O_APPEND);
+	else if ((*aux)->type == RD_INPUT)
+		fd = ft_input(&(*aux), tokens, num_com);
+	else if ((*aux)->type == RD_HEREDOC)
+		fd = ft_doc(&(*aux), tokens, num_com, std_fd);
+	return (fd);
+}
+
 int	ft_redirect(t_parsed **tokens, int num_com, int *std_fd)
 {
 	t_parsed	*aux;
@@ -25,17 +44,7 @@ int	ft_redirect(t_parsed **tokens, int num_com, int *std_fd)
 	aux = tokens[num_com];
 	while (aux && aux->next)
 	{
-		fd = 1;
-		if (aux->type == RD_OVERWRITE)
-			fd = ft_write_append(&aux, tokens,
-					num_com, O_WRONLY | O_CREAT | O_TRUNC);
-		else if (aux->type == RD_APPEND)
-			fd = ft_write_append(&aux, tokens,
-					num_com, O_WRONLY | O_CREAT | O_APPEND);
-		else if (aux->type == RD_INPUT)
-			fd = ft_input(&aux, tokens, num_com);
-		else if (aux->type == RD_HEREDOC)
-			fd = ft_doc(&aux, tokens, num_com, std_fd);
+		fd = ft_what_red(&aux, tokens, num_com, std_fd);
 		if (fd <= -1)
 		{
 			if (errno == 13)
@@ -74,11 +83,7 @@ static int	ft_write_append(t_parsed **aux, t_parsed **tokens,
 			(*aux)->prev = tmp;
 	}
 	else
-	{
-		tokens[num_com] = *aux;
-		if (*aux)
-			(*aux)->prev = NULL;
-	}
+		ft_delete_redirects(aux, tokens, num_com);
 	ft_free_tokens(free_me);
 	*aux = tokens[num_com];
 	return (fd);
@@ -107,12 +112,7 @@ static int	ft_input(t_parsed **aux, t_parsed **tokens, int num_com)
 			(*aux)->prev = tmp;
 	}
 	else
-	{
-
-		tokens[num_com] = *aux;
-		if (*aux)
-			(*aux)->prev = NULL;
-	}
+		ft_delete_redirects(aux, tokens, num_com);
 	ft_free_tokens(free_me);
 	*aux = tokens[num_com];
 	return (fd);
@@ -141,31 +141,7 @@ static int	ft_doc(t_parsed **aux, t_parsed **tokens, int num_com, int *std_fd)
 			(*aux)->prev = tmp;
 	}
 	else
-	{
-		tokens[num_com] = *aux;
-		(*aux)->prev = NULL;
-	}
+		ft_delete_redirects(aux, tokens, num_com);
 	ft_free_tokens(free_me);
 	return (pid);
-}
-
-void	ft_in_doc(int pipe_fd[2], char *heredoc)
-{
-	char	*line;
-	int		status;
-
-	line = NULL;
-	while (1)
-	{
-		line = readline("> ");
-		if (!line || !ft_strcmp(line, heredoc))
-			break ;
-		status = write(pipe_fd[1], line, ft_strlen(line));
-		if (status == -1)
-			ft_putendl_fd("Erro writing to pipe", 2);
-		status = write(pipe_fd[1], "\n", 1);
-		if (status == -1)
-			ft_putendl_fd("Erro writing to pipe", 2);
-		free(line);
-	}
 }

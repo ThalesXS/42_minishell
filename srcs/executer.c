@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:18:36 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/17 19:24:30 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/17 21:10:48 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_executer(char *command, char **new_array,
 		char **array_env, t_parsed *tokens)
 {
-	struct stat path_stat;
+	struct stat	path_stat;
 
 	ft_restore_signals();
 	stat(command, &path_stat);
@@ -38,6 +38,7 @@ void	ft_executer(char *command, char **new_array,
 		ft_exit(tokens, NULL, NULL, 0);
 	}
 }
+
 void	ft_save_exit_status(int status, t_envs *envs)
 {
 	char	*exit_status;
@@ -49,7 +50,7 @@ void	ft_save_exit_status(int status, t_envs *envs)
 	free(exit_status);
 }
 
-void ft_err_msg(char *error, int signal)
+void	ft_err_msg(char *error, int signal)
 {
 	ft_putendl_fd(error, 2);
 	g_signal = signal;

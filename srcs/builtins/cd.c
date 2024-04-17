@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 22:57:13 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/16 19:19:22 by dmeirele         ###   ########.fr       */
+/*   Updated: 2024/04/17 22:09:28 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,7 @@ static int	ft_change_directory(char *args, t_envs *envs)
 				ft_update_curr_dir(envs, curr_dir, old_pwd);
 		}
 		else
-		{
-			if (errno == 13)
-				ft_err_msg(" Permission denied", 1);
-			else if (errno == 2)
-				ft_err_msg(" No such file or directory", 1);
-		}
+			ft_errno();
 		return (1);
 	}
 	return (0);

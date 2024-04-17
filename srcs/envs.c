@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:18:28 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/17 14:53:38 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/17 22:06:26 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,6 @@ t_envs	*ft_create_envs(char **envp)
 	}
 	return (envs);
 }
-void	ft_mslvl(t_envs *envs, char *envp)
-{
-	char	*mslvl;
-	int		value;
-	char	*temp;
-
-	value = ft_atoi(&envp[6]);
-	value++;
-	temp = ft_itoa(value);
-	mslvl = ft_strjoin("SHLVL=", temp);
-	free(temp);
-	ft_add_env(envs, ft_new_env(mslvl));
-	free(mslvl);
-}
-
 
 t_envs	*ft_new_env(char *str)
 {
@@ -125,28 +110,28 @@ char	**ft_array_envs(t_envs *envs)
 	return (arr);
 }
 
-t_envs *ft_create_envs_for_export(t_envs *new, char **new_envs)
+t_envs	*ft_create_envs_for_export(t_envs *new, char **new_envs)
 {
-    t_envs		*start;
-    char		*helper_value;
-    char		*helper_key;
+	t_envs	*start;
+	char	*helper_value;
+	char	*helper_key;
 
-    new = ft_return_new_env(new, new_envs);
-    start = new;
-    while (new->next)
-    {
-        if (ft_strcmp(new->next->key, new->key) < 0)
-        {
-            helper_key = new->next->key;
-            helper_value = new->next->value;
-            new->next->key = new->key;
-            new->next->value = new->value;
-            new->value = helper_value;
-            new->key = helper_key;
-            new = start;
-            continue;
-        }
-        new = new->next;
-    }
-    return (start);
+	new = ft_return_new_env(new, new_envs);
+	start = new;
+	while (new->next)
+	{
+		if (ft_strcmp(new->next->key, new->key) < 0)
+		{
+			helper_key = new->next->key;
+			helper_value = new->next->value;
+			new->next->key = new->key;
+			new->next->value = new->value;
+			new->value = helper_value;
+			new->key = helper_key;
+			new = start;
+			continue ;
+		}
+		new = new->next;
+	}
+	return (start);
 }

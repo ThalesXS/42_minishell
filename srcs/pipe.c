@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:15:14 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/17 19:24:54 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/17 22:04:43 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,7 @@ int	valid_tokens(t_parsed *tokens)
 		else if (type != STRING)
 		{
 			if (!tokens->next || tokens->next->type != STRING)
-			{
-				ft_putendl_fd(" syntax error near unexpected token `newline'", 2);
-				g_signal = 2;
-				return (0);
-			}
+				return (ft_syntax_error());
 		}
 		tokens = tokens->next;
 	}

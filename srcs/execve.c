@@ -16,12 +16,12 @@ static void	ft_exec_command(char *command, t_parsed *tokens);
 static char	**ft_count_args(t_parsed *tokens);
 static char	*ft_get_absolut_path(char *command, t_envs *envs);
 
-static void    ft_exec_command(char *command, t_parsed *tokens)
+static void	ft_exec_command(char *command, t_parsed *tokens)
 {
-	t_envs    *envs;
-	pid_t    new_process;
-	char    **array_env;
-	char    **new_array;
+	t_envs	*envs;
+	pid_t	new_process;
+	char	**array_env;
+	char	**new_array;
 
 	new_array = ft_count_args(tokens);
 	envs = return_envs(0);
@@ -109,9 +109,11 @@ void	ft_find_path(t_parsed *token, t_envs *envs)
 		ft_exec_command(path, token);
 	else
 	{
-		if (access(command, F_OK) && (!strncmp(command, "/", 1) || !strncmp(command, "./", 2)))
+		if (access(command, F_OK)
+			&& (!strncmp(command, "/", 1) || !strncmp(command, "./", 2)))
 			ft_err_msg(" No such file or directory", 127);
-		else if (access(command, X_OK) && (!strncmp(command, "/", 1) || !strncmp(command, "./", 2)))
+		else if (access(command, X_OK)
+			&& (!strncmp(command, "/", 1) || !strncmp(command, "./", 2)))
 			ft_err_msg(" Permission denied", 126);
 		else
 			ft_err_msg(" command not found", 127);

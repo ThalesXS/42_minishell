@@ -26,7 +26,12 @@ expander.c \
 treat_token.c \
 pipe.c \
 redirect.c \
-free.c 
+free.c \
+expander_utils.c \
+redirect_utils.c \
+pipe_utils.c \
+envs_utils.c \
+builtins/cd_utils.c
 SRCS_DIR = srcs/
 OBJS = $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 OBJS_DIR = objs/
