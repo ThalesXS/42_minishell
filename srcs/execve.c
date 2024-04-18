@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "minishell.h"
 
 static void	ft_exec_command(char *command, t_parsed *tokens);
 static char	**ft_count_args(t_parsed *tokens);

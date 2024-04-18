@@ -6,11 +6,11 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:20:36 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/17 12:57:23 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:31:42 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/minishell.h"
+#include "minishell.h"
 
 void	ft_exec_env(t_envs *envs)
 {

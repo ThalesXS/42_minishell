@@ -6,11 +6,11 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:33:04 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/02/26 23:52:37 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:31:42 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/minishell.h"
+#include "minishell.h"
 
 static int	ft_check_echo_arguments(char *array_args);
 static void	ft_print_echo_space(t_parsed *aux);

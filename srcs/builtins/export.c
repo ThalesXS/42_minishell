@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:20:20 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/02/12 12:20:20 by dmeirele         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:03:57 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/minishell.h"
+#include "minishell.h"
 
 static int	ft_check_first_char(char *args);
 static void	ft_print_sorted_envs(t_envs *envs);

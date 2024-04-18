@@ -6,11 +6,11 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 14:29:26 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/11 16:52:15 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:31:32 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "minishell.h"
 
 char	*ft_get_dir(void)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   splits_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hescoval <hescoval@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/09 22:03:59 by hescoval          #+#    #+#             */
-/*   Updated: 2024/02/09 22:06:20 by hescoval         ###   ########.fr       */
+/*   Created: 2024/04/18 17:50:57 by txisto-d          #+#    #+#             */
+/*   Updated: 2024/04/18 19:05:17 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

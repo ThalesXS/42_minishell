@@ -6,13 +6,29 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:19:11 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/18 17:27:08 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:05:59 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "minishell.h"
 
 static t_parsed	*ft_tokenizer(char *line);
+
+int	ft_more_than_blank(char *line)
+{
+	int	i;
+	int	not_blank;
+
+	i = 0;
+	not_blank = 0;
+	while (line[i])
+	{
+		if (line[i] != ' ' || (line[i] >= 7 && line[i] <= 13))
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 void	ft_minishell(void)
 {
@@ -27,14 +43,15 @@ void	ft_minishell(void)
 		free(prompt);
 		if (!line)
 			ft_handle_eof();
-		if (!line[0])
-			continue ;
-		add_history(line);
-		tokens = ft_tokenizer(line);
-		if (!tokens)
-			continue ;
-		if (valid_tokens(tokens))
-			ft_parser(tokens);
+		if (ft_more_than_blank(line))
+		{
+			add_history(line);
+			tokens = ft_tokenizer(line);
+			if (!tokens)
+				continue ;
+			if (valid_tokens(tokens))
+				ft_parser(tokens);
+		}
 		free(line);
 	}
 }

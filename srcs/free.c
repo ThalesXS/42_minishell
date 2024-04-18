@@ -6,11 +6,11 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 22:21:51 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/17 21:14:18 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:31:32 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "minishell.h"
 
 void	ft_free_commands(t_parsed **commands, int total_com)
 {

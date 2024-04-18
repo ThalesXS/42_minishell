@@ -6,11 +6,11 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:28:12 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/02/22 11:10:59 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:31:32 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "minishell.h"
 
 static void	ft_quotes_len(char *str, size_t *i, size_t *len, char quote)
 {

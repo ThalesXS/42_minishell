@@ -6,11 +6,11 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 22:57:13 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/18 17:19:38 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:31:42 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/minishell.h"
+#include "minishell.h"
 
 static void	ft_success(char *args, t_envs *envs, char curr_dir[PATH_MAX],
 				char old_pwd[PATH_MAX]);

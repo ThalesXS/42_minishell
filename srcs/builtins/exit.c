@@ -6,11 +6,11 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:06:24 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/17 21:17:19 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:31:42 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/minishell.h"
+#include "minishell.h"
 
 static void	ft_forced_signal_exit(t_parsed **commands, int total_com,
 				int sig_value);
