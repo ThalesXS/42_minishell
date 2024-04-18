@@ -6,15 +6,17 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 22:57:13 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/18 16:37:37 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:19:38 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
 static void	ft_success(char *args, t_envs *envs, char curr_dir[PATH_MAX],
-			char old_pwd[PATH_MAX]);
+				char old_pwd[PATH_MAX]);
 static void	ft_failure(char curr_dir[PATH_MAX], t_envs *envs, char *args);
+static void	ft_old_in_failure(t_envs *envs, char curr_dir[PATH_MAX],
+				char *helper2, char *helper_pwd);
 static void	ft_get_home_dir(t_envs *envs);
 
 void	ft_exec_cd(t_parsed *tokens, t_envs *envs)
@@ -63,7 +65,14 @@ static void	ft_success(char *args, t_envs *envs, char curr_dir[PATH_MAX],
 		ft_errno();
 }
 
-
+static void	ft_old_in_failure(t_envs *envs, char curr_dir[PATH_MAX],
+				char *helper2, char *helper_pwd)
+{
+	ft_get_oldpwd_dir(envs);
+	if (getcwd(curr_dir, sizeof(char [4096])))
+		ft_update_curr_dir(envs, curr_dir, helper2);
+	return (free(helper2), free(helper_pwd));
+}
 
 static void	ft_failure(char curr_dir[PATH_MAX], t_envs *envs, char *args)
 {
@@ -82,12 +91,7 @@ static void	ft_failure(char curr_dir[PATH_MAX], t_envs *envs, char *args)
 		return (free(helper2), free(helper_pwd));
 	}
 	else if (!ft_strcmp(args, "-"))
-	{
-		ft_get_oldpwd_dir(envs);
-		if (getcwd(curr_dir, sizeof(char [4096])))
-			ft_update_curr_dir(envs, curr_dir, helper2);
-		return (free(helper2), free(helper_pwd));
-	}
+		return (ft_old_in_failure(envs, curr_dir, helper2, helper_pwd));
 	else if (args && !chdir(args) && getcwd(curr_dir, sizeof(char [4096])))
 	{
 		ft_update_curr_dir(envs, curr_dir, helper2);

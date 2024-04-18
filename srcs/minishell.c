@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:19:11 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/16 17:19:11 by dmeirele         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:27:08 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_minishell(void)
 static t_parsed	*ft_tokenizer(char *line)
 {
 	t_parsed	*tokens;
-	char		*help_hugo_god;
+	char		*add_pad;
 
 	if (!ft_check_open_quotes(line))
 		return (NULL);
@@ -58,10 +58,10 @@ static t_parsed	*ft_tokenizer(char *line)
 		g_signal = 2;
 		return (NULL);
 	}
-	help_hugo_god = pad_central(line);
-	tokens = ft_split_token(help_hugo_god);
-	ft_treat_token(&tokens, help_hugo_god);
-	free(help_hugo_god);
+	add_pad = pad_central(line);
+	tokens = ft_split_token(add_pad);
+	ft_treat_token(&tokens, add_pad);
+	free(add_pad);
 	return (tokens);
 }
 

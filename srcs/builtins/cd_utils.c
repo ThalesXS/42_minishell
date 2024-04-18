@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 22:07:51 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/18 16:37:30 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:25:44 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,13 @@ void	ft_get_oldpwd_dir(t_envs *envs)
 
 void	ft_update_curr_dir(t_envs *envs, char *curr_dir, char *old_pwd)
 {
-	while (envs)
-	{
-		if (!ft_strcmp(envs->key, "PWD"))
-		{
-			if (envs->value)
-				free(envs->value);
-			envs->value = ft_strdup(curr_dir);
-		}
-		if (!ft_strcmp(envs->key, "OLDPWD"))
-		{
-			if (envs->value)
-				free(envs->value);
-			envs->value = ft_strdup(old_pwd);
-		}
-		envs = envs->next;
-	}
+	char	*pwd;
+	char	*old;
+
+	pwd = ft_strjoin("PWD=", curr_dir);
+	old = ft_strjoin("OLDPWD=", old_pwd);
+	ft_add_env(envs, ft_new_env(pwd));
+	ft_add_env(envs, ft_new_env(old));
+	free(pwd);
+	free(old);
 }
