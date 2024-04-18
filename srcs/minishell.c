@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:19:11 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/18 19:05:59 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:09:22 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_more_than_blank(char *line)
 	not_blank = 0;
 	while (line[i])
 	{
-		if (line[i] != ' ' || (line[i] >= 7 && line[i] <= 13))
+		if (line[i] != ' ' && !(line[i] >= 7 && line[i] <= 13))
 			return (1);
 		i++;
 	}

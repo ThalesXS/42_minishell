@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 22:57:13 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/18 17:31:42 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:26:18 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,10 @@ static void	ft_get_home_dir(t_envs *envs)
 	while (envs)
 	{
 		if (!ft_strcmp(envs->key, "HOME"))
+		{
 			home_dir = ft_strdup(envs->value);
+			break ;
+		}
 		envs = envs->next;
 	}
 	if (!chdir(home_dir))
@@ -120,5 +123,10 @@ static void	ft_get_home_dir(t_envs *envs)
 			free(home_dir);
 		return ;
 	}
-	ft_putendl_fd(" HOME not set", 2);
+	else if (envs && !ft_strcmp(envs->key, "HOME"))
+		ft_err_msg(" No such file or directory", 1);
+	else
+		ft_err_msg(" HOME not set", 1);
+	if (home_dir)
+		free(home_dir);
 }
