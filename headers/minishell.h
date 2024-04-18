@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:06:26 by pabernar          #+#    #+#             */
-/*   Updated: 2024/04/17 22:13:26 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/18 16:32:53 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,4 +256,9 @@ void				ft_mslvl(t_envs *envs, char *envp);
 
 //	====================			cd_utils.c				====================
 void				ft_errno(void);
+void				ft_while_else(char	**helper_pwd,
+						char **helper2, t_envs **head);
+void				ft_get_oldpwd_dir(t_envs *envs);
+void				ft_update_curr_dir(t_envs *envs,
+						char *curr_dir, char *old_pwd);
 #endif

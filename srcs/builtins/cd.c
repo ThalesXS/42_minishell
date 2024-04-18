@@ -6,94 +6,97 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 22:57:13 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/17 22:09:28 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/18 16:37:37 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-static void	ft_update_curr_dir(t_envs *envs, char *curr_dir, char *old_pwd);
+static void	ft_success(char *args, t_envs *envs, char curr_dir[PATH_MAX],
+			char old_pwd[PATH_MAX]);
+static void	ft_failure(char curr_dir[PATH_MAX], t_envs *envs, char *args);
 static void	ft_get_home_dir(t_envs *envs);
-static int	ft_change_directory(char *args, t_envs *envs);
-static void	ft_change_directory_exception(t_envs *head, t_envs *envs);
 
 void	ft_exec_cd(t_parsed *tokens, t_envs *envs)
 {
+	char	curr_dir[PATH_MAX];
+	char	old_pwd[PATH_MAX];
 	char	*args;
-	t_envs	*head;
 
-	head = envs;
 	if (tokens && tokens->next)
 	{
-		ft_err_msg(" too many arguments", 1);
+		ft_putendl_fd(" too many arguments", 2);
+		g_signal = 1;
 		return ;
 	}
 	if (tokens)
 		args = tokens->text;
 	else
 		args = NULL;
-	if (!ft_change_directory(args, envs))
-		ft_change_directory_exception(head, envs);
-}
-
-static void	ft_change_directory_exception(t_envs *head, t_envs *envs)
-{
-	char	*helper[2];
-
-	while (head)
-	{
-		if (!ft_strcmp(head->key, "OLDPWD"))
-			helper[0] = ft_strdup(head->value);
-		if (!ft_strcmp(head->key, "PWD"))
-			helper[1] = ft_strdup(head->value);
-		head = head->next;
-	}
-	ft_update_curr_dir(envs, helper[0], helper[1]);
-}
-
-static int	ft_change_directory(char *args, t_envs *envs)
-{
-	char	old_pwd[PATH_MAX];
-	char	curr_dir[PATH_MAX];
-
 	if (getcwd(old_pwd, sizeof(old_pwd)))
-	{
-		if (args == NULL || !ft_strcmp(args, "~"))
-		{
-			ft_get_home_dir(envs);
-			if (getcwd(curr_dir, sizeof(curr_dir)))
-				ft_update_curr_dir(envs, curr_dir, old_pwd);
-		}
-		else if (!chdir(args))
-		{
-			if (getcwd(curr_dir, sizeof(curr_dir)))
-				ft_update_curr_dir(envs, curr_dir, old_pwd);
-		}
-		else
-			ft_errno();
-		return (1);
-	}
-	return (0);
+		ft_success(args, envs, curr_dir, old_pwd);
+	else
+		ft_failure(curr_dir, envs, args);
 }
 
-static void	ft_update_curr_dir(t_envs *envs, char *curr_dir, char *old_pwd)
+static void	ft_success(char *args, t_envs *envs, char curr_dir[PATH_MAX],
+			char old_pwd[PATH_MAX])
 {
-	while (envs)
+	if (args == NULL || !ft_strcmp(args, "~"))
 	{
-		if (!ft_strcmp(envs->key, "PWD"))
-		{
-			if (envs->value)
-				free(envs->value);
-			envs->value = ft_strdup(curr_dir);
-		}
-		if (!ft_strcmp(envs->key, "OLDPWD"))
-		{
-			if (envs->value)
-				free(envs->value);
-			envs->value = ft_strdup(old_pwd);
-		}
-		envs = envs->next;
+		ft_get_home_dir(envs);
+		if (getcwd(curr_dir, sizeof(char [4096])))
+			ft_update_curr_dir(envs, curr_dir, old_pwd);
 	}
+	else if (!ft_strcmp(args, "-"))
+	{
+		ft_get_oldpwd_dir(envs);
+		if (getcwd(curr_dir, sizeof(char [4096])))
+			ft_update_curr_dir(envs, curr_dir, old_pwd);
+	}
+	else if (!chdir(args))
+	{
+		if (getcwd(curr_dir, sizeof(char [4096])))
+			ft_update_curr_dir(envs, curr_dir, old_pwd);
+	}
+	else
+		ft_errno();
+}
+
+
+
+static void	ft_failure(char curr_dir[PATH_MAX], t_envs *envs, char *args)
+{
+	char	*helper_pwd;
+	char	*helper2;
+	t_envs	*head;
+
+	head = envs;
+	while (head)
+		ft_while_else(&helper_pwd, &helper2, &head);
+	if (args == NULL || !ft_strcmp(args, "~"))
+	{
+		ft_get_home_dir(envs);
+		if (getcwd(curr_dir, sizeof(char [4096])))
+			ft_update_curr_dir(envs, curr_dir, helper2);
+		return (free(helper2), free(helper_pwd));
+	}
+	else if (!ft_strcmp(args, "-"))
+	{
+		ft_get_oldpwd_dir(envs);
+		if (getcwd(curr_dir, sizeof(char [4096])))
+			ft_update_curr_dir(envs, curr_dir, helper2);
+		return (free(helper2), free(helper_pwd));
+	}
+	else if (args && !chdir(args) && getcwd(curr_dir, sizeof(char [4096])))
+	{
+		ft_update_curr_dir(envs, curr_dir, helper2);
+		free(helper2);
+		free(helper_pwd);
+		return ;
+	}
+	chdir(helper_pwd);
+	ft_update_curr_dir(envs, helper_pwd, helper2);
 }
 
 static void	ft_get_home_dir(t_envs *envs)
@@ -113,4 +116,5 @@ static void	ft_get_home_dir(t_envs *envs)
 			free(home_dir);
 		return ;
 	}
+	ft_putendl_fd(" HOME not set", 2);
 }
