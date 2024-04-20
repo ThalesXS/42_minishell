@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:06:26 by pabernar          #+#    #+#             */
-/*   Updated: 2024/04/20 22:07:19 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/20 23:42:38 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,4 +275,5 @@ void				ft_get_oldpwd_dir(t_envs *envs);
 void				ft_update_curr_dir(t_envs *envs,
 						char *curr_dir, char *old_pwd);
 void				ft_retrieve_io(t_processio *processio);
+void				ft_finish_redirect(t_processio *processio);
 #endif

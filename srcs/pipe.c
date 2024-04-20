@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:15:14 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/20 23:23:46 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/20 23:42:52 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ pid_t	ft_pipe(t_processio *processio)
 			ft_parent(pipe_fd, processio);
 	}
 	else
-	{
-		dup2(processio->std_fd[1], 1);
-		processio->redirect_fd = ft_redirect(processio);
-	}
+		ft_finish_redirect(processio);
 	return (pid);
 }
 
