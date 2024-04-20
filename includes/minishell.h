@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:06:26 by pabernar          #+#    #+#             */
-/*   Updated: 2024/04/18 16:32:53 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/20 22:07:19 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,20 @@ typedef struct s_parsed
 	int					unite_with_next;
 }					t_parsed;
 
+typedef struct s_processio
+{
+	char		*line;
+	t_parsed	**commands;
+	pid_t		parent_pid;
+	pid_t		child_pid;
+	int			num_com;
+	int			total_com;
+	int			std_fd[2];
+	int			pipe_fd[2];
+	int			redirect_fd;
+	int			redirect_signal;
+}				t_processio;
+
 /* ************************************************************************** */
 /*				Global Var					   */
 /* ************************************************************************** */
@@ -81,14 +95,11 @@ void				ft_minishell(void);
 /* ************************************************************************** */
 /*				parser.c					   */
 /* ************************************************************************** */
-void				ft_parser(t_parsed *tokens);
-int					redirect_check(char *line);
+void				ft_parser(t_parsed *tokens, char *line);
 int					padding_needed(char *line, int i, int pad);
 void				pad(char *src, char *dest, int i, int j);
-int					pipe_checks(char *line);
 char				*pad_central(char *line);
 int					quotes_open(char *str, int target_index);
-t_parsed			*make_list(char **args);
 void				ft_farfaraway(t_parsed *tokens, int klen, char **new,
 						char **tmp);
 int					ft_check_open_quotes(char *line);
@@ -155,7 +166,8 @@ t_envs				*ft_exec_export(t_envs *envs,
 /* ************************************************************************** */
 /*				unset.c					   */
 /* ************************************************************************** */
-t_envs				*ft_exec_unset(t_envs *envs, t_parsed *tokens);
+t_envs				*ft_exec_unset(t_envs *envs, t_parsed *tokens,
+						int total_com);
 /* ************************************************************************** */
 /*				env.c					   */
 /* ************************************************************************** */
@@ -182,6 +194,7 @@ void				ft_handle_sigint(int sig);
 void				ft_handle_sigint_ign(int sig);
 void				ft_handle_sigquit(int sig);
 void				ft_handle_doc(int sig);
+void				ft_userhandler(void);
 /* ************************************************************************** */
 /*									directory.c								*/
 /* ************************************************************************** */
@@ -215,15 +228,15 @@ void				ft_treat_token(t_parsed **token, char *line);
 /* ************************************************************************** */
 /*									pipe.c							*/
 /* ************************************************************************** */
-pid_t				ft_pipe(int *num_com, int total_com);
+pid_t				ft_pipe(t_processio *processio);
 int					valid_tokens(t_parsed *tokens);
 
 /* ************************************************************************** */
 /*									redirect.c							*/
 /* ************************************************************************** */
 pid_t				ft_manage_heredoc(int pipe_fd[2], char *heredoc,
-						int *std_fd, t_parsed **tokens);
-int					ft_redirect(t_parsed **tokens, int num_com, int *std_fd);
+						t_processio *processio);
+int					ft_redirect(t_processio *processio);
 void				ft_in_doc(int pipe_fd[2], char *heredoc);
 
 /* ************************************************************************** */
@@ -261,4 +274,5 @@ void				ft_while_else(char	**helper_pwd,
 void				ft_get_oldpwd_dir(t_envs *envs);
 void				ft_update_curr_dir(t_envs *envs,
 						char *curr_dir, char *old_pwd);
+void				ft_retrieve_io(t_processio *processio);
 #endif

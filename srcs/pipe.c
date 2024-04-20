@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:15:14 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/18 17:31:32 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/20 21:56:17 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,16 @@
 static void	ft_child(int *pipe_fd);
 static void	ft_parent(int *pipe_fd);
 
-pid_t	ft_pipe(int *num_com, int total_com)
+pid_t	ft_pipe(t_processio *processio)
 {
 	int		pipe_fd[2];
 	int		status;
 	pid_t	pid;
 
 	pid = 0;
-	if (*num_com < total_com - 1)
+	if (processio->num_com < processio->total_com - 1)
 	{
+		processio->redirect_signal = ft_redirect(processio);
 		status = pipe(pipe_fd);
 		if (status == -1)
 			ft_printf("Error creating pipe\n");
@@ -31,8 +32,8 @@ pid_t	ft_pipe(int *num_com, int total_com)
 		if (pid == 0)
 		{
 			ft_child(pipe_fd);
-			(*num_com)++;
-			pid = ft_pipe(num_com, total_com);
+			processio->num_com++;
+			pid = ft_pipe(processio);
 		}
 		else
 			ft_parent(pipe_fd);
@@ -54,8 +55,7 @@ static void	ft_child(int *pipe_fd)
 	close(pipe_fd[0]);
 }
 
-pid_t	ft_manage_heredoc(int pipe_fd[2], char *heredoc,
-			int *std_fd, t_parsed **tokens)
+pid_t	ft_manage_heredoc(int pipe_fd[2], char *heredoc, t_processio *processio)
 {
 	pid_t	pid;
 
@@ -63,12 +63,13 @@ pid_t	ft_manage_heredoc(int pipe_fd[2], char *heredoc,
 	ft_ignore_signals();
 	if (pid == 0)
 	{
-		ft_save_commands(tokens);
+		ft_save_commands(processio->commands);
 		ft_doc_signals();
-		dup2(std_fd[0], 0);
-		dup2(std_fd[1], 1);
+		dup2(processio->std_fd[0], 0);
+		dup2(processio->std_fd[1], 1);
 		ft_in_doc(pipe_fd, heredoc);
-		ft_free_commands(tokens, 1);
+		ft_free_commands(processio->commands, 1);
+		free(processio->line);
 		ft_exit(NULL, NULL, NULL, 0);
 	}
 	else

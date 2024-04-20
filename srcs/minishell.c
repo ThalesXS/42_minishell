@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:19:11 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/18 19:09:22 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/20 21:13:42 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ static t_parsed	*ft_tokenizer(char *line);
 int	ft_more_than_blank(char *line)
 {
 	int	i;
-	int	not_blank;
 
 	i = 0;
-	not_blank = 0;
 	while (line[i])
 	{
 		if (line[i] != ' ' && !(line[i] >= 7 && line[i] <= 13))
@@ -32,27 +30,30 @@ int	ft_more_than_blank(char *line)
 
 void	ft_minishell(void)
 {
-	char		*line;
+	char		*line[2];
 	char		*prompt;
 	t_parsed	*tokens;
 
 	while (1)
 	{
 		prompt = ft_get_dir();
-		line = readline(prompt);
+		line[0] = readline(prompt);
 		free(prompt);
-		if (!line)
+		if (!line[0])
 			ft_handle_eof();
-		if (ft_more_than_blank(line))
+		if (ft_more_than_blank(line[0]))
 		{
-			add_history(line);
-			tokens = ft_tokenizer(line);
+			add_history(line[0]);
+			line[1] = ft_strtrim(line[0], " \t\n");
+			free(line[0]);
+			line[0] = line[1];
+			tokens = ft_tokenizer(line[0]);
 			if (!tokens)
 				continue ;
 			if (valid_tokens(tokens))
-				ft_parser(tokens);
+				ft_parser(tokens, line[0]);
 		}
-		free(line);
+		free(line[0]);
 	}
 }
 

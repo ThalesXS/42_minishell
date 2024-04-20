@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:08:49 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/18 17:31:32 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/20 22:04:46 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,36 +15,35 @@
 static int	ft_write_append(t_parsed **aux, t_parsed **tokens,
 				int num_com, int flag);
 static int	ft_input(t_parsed **aux, t_parsed **tokens, int num_com);
-static int	ft_doc(t_parsed **aux, t_parsed **tokens, int num_com, int *std_fd);
+static int	ft_doc(t_parsed **aux, t_processio *processio);
 
-static int	ft_what_red(t_parsed **aux, t_parsed **tokens,
-				int num_com, int *std_fd)
+static int	ft_what_red(t_parsed **aux, t_processio *processio)
 {
 	int	fd;
 
 	fd = 1;
 	if ((*aux)->type == RD_OVERWRITE)
-		fd = ft_write_append(&(*aux), tokens,
-				num_com, O_WRONLY | O_CREAT | O_TRUNC);
+		fd = ft_write_append(&(*aux), processio->commands,
+				processio->num_com, O_WRONLY | O_CREAT | O_TRUNC);
 	else if ((*aux)->type == RD_APPEND)
-		fd = ft_write_append(&(*aux), tokens,
-				num_com, O_WRONLY | O_CREAT | O_APPEND);
+		fd = ft_write_append(&(*aux), processio->commands,
+				processio->num_com, O_WRONLY | O_CREAT | O_APPEND);
 	else if ((*aux)->type == RD_INPUT)
-		fd = ft_input(&(*aux), tokens, num_com);
+		fd = ft_input(&(*aux), processio->commands, processio->num_com);
 	else if ((*aux)->type == RD_HEREDOC)
-		fd = ft_doc(&(*aux), tokens, num_com, std_fd);
+		fd = ft_doc(&(*aux), processio);
 	return (fd);
 }
 
-int	ft_redirect(t_parsed **tokens, int num_com, int *std_fd)
+int	ft_redirect(t_processio *processio)
 {
 	t_parsed	*aux;
 	int			fd;
 
-	aux = tokens[num_com];
+	aux = processio->commands[processio->num_com];
 	while (aux && aux->next)
 	{
-		fd = ft_what_red(&aux, tokens, num_com, std_fd);
+		fd = ft_what_red(&aux, processio);
 		if (fd <= -1)
 		{
 			if (errno == 13)
@@ -118,10 +117,10 @@ static int	ft_input(t_parsed **aux, t_parsed **tokens, int num_com)
 	return (fd);
 }
 
-static int	ft_doc(t_parsed **aux, t_parsed **tokens, int num_com, int *std_fd)
+static int	ft_doc(t_parsed **aux, t_processio *processio)
 {
 	int			pipe_fd[2];
-	int			status;
+	int			i;
 	t_parsed	*tmp;
 	t_parsed	*free_me;
 	pid_t		pid;
@@ -129,10 +128,10 @@ static int	ft_doc(t_parsed **aux, t_parsed **tokens, int num_com, int *std_fd)
 	tmp = (*aux)->prev;
 	free_me = *aux;
 	*aux = (*aux)->next->next;
-	status = pipe(pipe_fd);
-	if (status == -1)
+	i = pipe(pipe_fd);
+	if (i == -1)
 		ft_putendl_fd("Error creating pipe", 2);
-	pid = ft_manage_heredoc(pipe_fd, free_me->next->text, std_fd, tokens);
+	pid = ft_manage_heredoc(pipe_fd, free_me->next->text, processio);
 	free_me->next->next = NULL;
 	if (tmp)
 	{
@@ -141,7 +140,7 @@ static int	ft_doc(t_parsed **aux, t_parsed **tokens, int num_com, int *std_fd)
 			(*aux)->prev = tmp;
 	}
 	else
-		ft_delete_redirects(aux, tokens, num_com);
+		ft_delete_redirects(aux, processio->commands, processio->num_com);
 	ft_free_tokens(free_me);
 	return (pid);
 }
