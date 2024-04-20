@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:08:49 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/20 22:04:46 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/20 23:22:30 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,17 @@ static int	ft_what_red(t_parsed **aux, t_processio *processio)
 
 	fd = 1;
 	if ((*aux)->type == RD_OVERWRITE)
+	{
 		fd = ft_write_append(&(*aux), processio->commands,
 				processio->num_com, O_WRONLY | O_CREAT | O_TRUNC);
+		processio->redirect_signal = 1;
+	}
 	else if ((*aux)->type == RD_APPEND)
+	{
 		fd = ft_write_append(&(*aux), processio->commands,
 				processio->num_com, O_WRONLY | O_CREAT | O_APPEND);
+		processio->redirect_signal = 1;
+	}
 	else if ((*aux)->type == RD_INPUT)
 		fd = ft_input(&(*aux), processio->commands, processio->num_com);
 	else if ((*aux)->type == RD_HEREDOC)

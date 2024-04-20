@@ -6,14 +6,14 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:15:14 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/20 21:56:17 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/20 23:23:46 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	ft_child(int *pipe_fd);
-static void	ft_parent(int *pipe_fd);
+static void	ft_parent(int *pipe_fd, t_processio *processio);
 
 pid_t	ft_pipe(t_processio *processio)
 {
@@ -22,9 +22,10 @@ pid_t	ft_pipe(t_processio *processio)
 	pid_t	pid;
 
 	pid = 0;
+	processio->redirect_signal = 0;
 	if (processio->num_com < processio->total_com - 1)
 	{
-		processio->redirect_signal = ft_redirect(processio);
+		processio->redirect_fd = ft_redirect(processio);
 		status = pipe(pipe_fd);
 		if (status == -1)
 			ft_printf("Error creating pipe\n");
@@ -36,15 +37,21 @@ pid_t	ft_pipe(t_processio *processio)
 			pid = ft_pipe(processio);
 		}
 		else
-			ft_parent(pipe_fd);
+			ft_parent(pipe_fd, processio);
+	}
+	else
+	{
+		dup2(processio->std_fd[1], 1);
+		processio->redirect_fd = ft_redirect(processio);
 	}
 	return (pid);
 }
 
-static void	ft_parent(int *pipe_fd)
+static void	ft_parent(int *pipe_fd, t_processio *processio)
 {
 	close(pipe_fd[0]);
-	dup2(pipe_fd[1], 1);
+	if (processio->redirect_signal == 0)
+		dup2(pipe_fd[1], 1);
 	close(pipe_fd[1]);
 }
 
