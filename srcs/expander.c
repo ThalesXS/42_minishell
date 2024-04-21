@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:12:17 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/21 19:31:34 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/21 21:23:56 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	ft_expanding(t_parsed *tokens, char *new, char *tmp, t_envs *envs)
 {
 	int		klen;
 	char	*point;
+	char	*value;
 
 	ft_init_temp(tokens, &klen, &point, &tmp);
 	if (!ft_strncmp(point, "?", 1))
@@ -55,11 +56,10 @@ static void	ft_expanding(t_parsed *tokens, char *new, char *tmp, t_envs *envs)
 		ft_expand_question_mark(tokens, new, tmp);
 		return ;
 	}
-	while (envs && ft_strncmp(point, envs->key, ft_envlen(point)) != 0)
-		envs = envs->next;
-	if (envs && envs->value)
+	value = ft_getenv(point, envs);
+	if (value)
 	{
-		new = ft_strjoin(tmp, envs->value);
+		new = ft_strjoin(tmp, value);
 		klen = ft_before_exp(tokens->text) + ft_strlen(envs->key) + 1;
 		free(tmp);
 		tmp = ft_substr(tokens->text, klen, ft_strlen(tokens->text) - klen);
@@ -67,6 +67,7 @@ static void	ft_expanding(t_parsed *tokens, char *new, char *tmp, t_envs *envs)
 		tokens->text = ft_strjoin(new, tmp);
 		free(new);
 		free(tmp);
+		free(value);
 	}
 	else
 		ft_farfaraway(tokens, klen, &new, &tmp);
