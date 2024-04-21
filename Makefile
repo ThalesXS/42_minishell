@@ -79,3 +79,4 @@ norm:
 leak: all
 	valgrind --leak-check=full --show-leak-kinds=all \
 		--suppressions=readline_leaks ./$(NAME)
+		

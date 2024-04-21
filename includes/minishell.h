@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:06:26 by pabernar          #+#    #+#             */
-/*   Updated: 2024/04/20 23:42:38 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/21 20:15:21 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ typedef enum s_special
 	RD_INPUT,
 	RD_HEREDOC,
 	PIPE,
-	STRING
+	STRING,
+	EMPTY
 }					t_special;
 
 typedef struct s_envs
@@ -276,4 +277,9 @@ void				ft_update_curr_dir(t_envs *envs,
 						char *curr_dir, char *old_pwd);
 void				ft_retrieve_io(t_processio *processio);
 void				ft_finish_redirect(t_processio *processio);
+char				*ft_expand_heredoc(char *line, t_envs *envs);
+char				*ft_getenv(char *key, t_envs *envs);
+size_t				ft_envlen(char *str);
+void				ft_free_expander(char *value, char *beginner, char *mid,
+						char *line);
 #endif

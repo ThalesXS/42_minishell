@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:54:36 by pabernar          #+#    #+#             */
-/*   Updated: 2024/04/20 22:05:35 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/20 23:50:28 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	ft_handle_sigint(int sig)
 		printf("\n");
 		rl_on_new_line();
 		rl_redisplay();
+		g_signal = 130;
 	}
 }
 
