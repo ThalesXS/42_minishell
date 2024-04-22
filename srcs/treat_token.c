@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:18:21 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/18 17:31:32 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:07:59 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	ft_treating(t_parsed *tokens);
 static void	ft_check_unite(t_parsed *tokens, const char *line);
 static void	ft_unite(t_parsed *token);
 
-void	ft_treat_token(t_parsed **tokens, char *line)
+void	ft_treat_token(t_parsed **tokens, char *pad, char *line)
 {
 	char		*temp;
 	t_parsed	*aux;
@@ -25,8 +25,8 @@ void	ft_treat_token(t_parsed **tokens, char *line)
 	t_envs		*envs;
 
 	envs = return_envs(NULL);
-	ft_check_unite(*tokens, line);
-	*tokens = ft_expand_variables(*tokens);
+	ft_check_unite(*tokens, pad);
+	*tokens = ft_expand_variables(*tokens, line);
 	ft_treating(*tokens);
 	aux = *tokens;
 	while (aux && aux->next)

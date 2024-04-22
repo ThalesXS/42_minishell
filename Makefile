@@ -41,6 +41,7 @@ BLUE = \033[0;34m
 YELLOW = \033[0;33m
 MAGENTA = \033[0;35m
 CYAN = \033[0;36m
+GREY = \033[30;1m
 
 B_RED = \033[1;31m
 B_GREEN = \033[1;32m
@@ -48,6 +49,7 @@ B_BLUE = \033[1;34m
 B_YELLOW = \033[1;33m
 B_MAGENTA = \033[1;35m
 B_CYAN = \033[1;36m
+B_GREY = \033[30;1m
 
 RESET = \033[0m
 
@@ -64,7 +66,7 @@ $(OBJ_DIR)/%.o: $(SRC)/%.c
 	$(eval COMPTEUR=$(shell echo $$(($(COMPTEUR)+1))))
 	@printf "\e[?25l"
 	@if test $(COMPTEUR) -eq 1;then \
-		printf "$(B_YELLOW)$(NAME)$(RESET):$(YELLOW) Compiling binary files...$(RESET)\n\n";fi
+		printf "$(B_GREEN)$(NAME)$(GREY): Compiling binary files...$(RESET)\n\n";fi
 	@printf "\033[A\33[2K\r$(CYAN)Binary $(COMPTEUR): $@$(RESET)\n"
 	@$(CC) $(W) $(I) $(O) $< -o $@
 
@@ -76,14 +78,14 @@ $(OBJ_DIR):
 clean:
 	@make $(WBLOCK) clean -C ./libft
 	@$(RM) -rf $(OBJ_DIR)
-	@echo "$(B_YELLOW)$(NAME)$(RESET):$(YELLOW) binary files deleted$(RESET)"
+	@echo "$(B_RED)$(NAME)$(GREY): binary files deleted$(RESET)"
 
 fclean:
 	@make $(WBLOCK) fclean -C ./libft
 	@$(RM) -rf $(OBJ_DIR)
-	@echo "$(B_YELLOW)$(NAME)$(RESET):$(YELLOW) binary files deleted$(RESET)"
+	@echo "$(B_RED)$(NAME)$(GREY): binary files deleted$(RESET)"
 	@$(RM) -rf $(NAME)
-	@echo "$(B_YELLOW)$(NAME)$(RESET):$(YELLOW) deleted$(RESET)"
+	@echo "$(B_RED)$(NAME)$(GREY): deleted$(RESET)"
 
 re: fclean all
 

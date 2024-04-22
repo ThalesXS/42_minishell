@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:19:11 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/22 15:22:16 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:06:56 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static t_parsed	*ft_tokenizer(char *line)
 	}
 	add_pad = pad_central(line);
 	tokens = ft_split_token(add_pad);
-	ft_treat_token(&tokens, add_pad);
+	ft_treat_token(&tokens, add_pad, line);
 	free(add_pad);
 	return (tokens);
 }

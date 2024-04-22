@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:06:26 by pabernar          #+#    #+#             */
-/*   Updated: 2024/04/22 12:18:27 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:10:42 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,14 +218,14 @@ t_parsed			*ft_split_token(char *line);
 /* ************************************************************************** */
 /*									expander.c							*/
 /* ************************************************************************** */
-t_parsed			*ft_expand_variables(t_parsed *tokens);
+t_parsed			*ft_expand_variables(t_parsed *tokens, char *line);
 int					ft_before_exp(char *str);
 int					ft_key_len(char *str);
 
 /* ************************************************************************** */
 /*									treat_token.c							*/
 /* ************************************************************************** */
-void				ft_treat_token(t_parsed **token, char *line);
+void				ft_treat_token(t_parsed **token, char *pad, char *line);
 
 /* ************************************************************************** */
 /*									pipe.c							*/
@@ -255,7 +255,7 @@ void				ft_err_msg(char *error, int signal);
 void				ft_init_temp(t_parsed *tokens, int *klen, char **point,
 						char **tmp);
 void				ft_null_text(t_parsed **aux, t_parsed **tokens,
-						t_parsed **to_free);
+						t_parsed **to_free, char *line);
 int					ft_prev_is_redirect(t_parsed *aux);
 int					ft_before_exp(char *str);
 

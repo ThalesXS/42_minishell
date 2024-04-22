@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:19:22 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/21 18:38:53 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:51:06 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,6 @@ int	padding_needed(char *line, int i, int pad)
 		i++;
 	}
 	return (pad);
-}
-
-void	ft_farfaraway(t_parsed *tokens, int klen, char **new, char **tmp)
-{
-	klen = ft_key_len(tokens->text);
-	klen = ft_before_exp(tokens->text) + ft_key_len(tokens->text) + 1;
-	*new = ft_strjoin(*tmp, (tokens->text + klen));
-	free(*tmp);
-	free(tokens->text);
-	tokens->text = *new;
 }
 
 int	pipe_check(char *line)

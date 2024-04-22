@@ -48,16 +48,16 @@ $(NAME): $(OBJ)
 	$(eval COMPTEUR=$(shell echo $$(($(COMPTEUR)+1))))
 	@printf "\e[?25l"
 	@if test $(COMPTEUR) -eq 1;then \
-		printf "$(B_YELLOW)$(NAME)$(RESET):$(YELLOW) Compiling binary files...$(RESET)\n\n";fi
+		printf "$(B_GREEN)$(NAME)$(RESET): Compiling binary files...$(RESET)\n\n";fi
 	@printf "\033[A\33[2K\r$(CYAN)Binary $(COMPTEUR): $@$(RESET)\n"
 	@$(CCW) -c $<
 
 clean:
 	@rm -f $(OBJ) $(BOBJ)
-	@echo "$(B_YELLOW)$(NAME)$(RESET):$(YELLOW) binary files deleted$(RESET)"
+	@echo "$(B_RED)$(NAME)$(RESET): binary files deleted$(RESET)"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "$(B_YELLOW)$(NAME)$(RESET):$(YELLOW) deleted$(RESET)"
+	@echo "$(B_RED)$(NAME)$(RESET): deleted$(RESET)"
 
 re: fclean all

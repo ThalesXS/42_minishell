@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 21:55:56 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/21 18:38:37 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:10:24 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,13 @@ int	ft_prev_is_redirect(t_parsed *aux)
 		return (0);
 }
 
-void	ft_null_text(t_parsed **aux, t_parsed **tokens, t_parsed **to_free)
+void	ft_null_text(t_parsed **aux, t_parsed **tokens,
+			t_parsed **to_free, char *line)
 {
 	if (*(*aux)->text == '\0')
 	{
+		if ((*aux)->next == NULL && (*aux)->prev == NULL)
+			free(line);
 		if ((*aux)->prev)
 			(*aux)->prev->next = (*aux)->next;
 		else
