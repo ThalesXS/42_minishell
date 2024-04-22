@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 22:00:14 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/21 20:20:36 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:45:18 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ char	*ft_expand_heredoc(char *line, t_envs *envs)
 		free(beginner);
 		if (line[i + ft_envlen(&line[i])] == '?'
 			&& line[i + ft_envlen(&line[i]) - 1] == '$')
-			i += 1;
-		beginner = ft_strdup(&line[i + ft_envlen(&line[i])]);
+			beginner = ft_strdup(&line[i + 1]);
+		else
+			beginner = ft_strdup(&line[i + ft_envlen(&line[i])]);
 		final = ft_strjoin(mid, beginner);
 		ft_free_expander(value, beginner, mid, line);
 		return (ft_expand_heredoc(final, envs));
@@ -85,6 +86,8 @@ char	*ft_getenv(char *key, t_envs *envs)
 	if (!ft_strncmp(key, "?", 1))
 	{
 		free(temp);
+		if (g_signal > 255)
+			return (ft_itoa(WEXITSTATUS(g_signal)));
 		return (ft_itoa(g_signal));
 	}
 	free(temp);
