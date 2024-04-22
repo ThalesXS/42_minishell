@@ -6,13 +6,13 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:15:14 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/20 23:42:52 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/22 20:59:07 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_child(int *pipe_fd);
+static void	ft_child(int *pipe_fd, t_processio *processio);
 static void	ft_parent(int *pipe_fd, t_processio *processio);
 
 pid_t	ft_pipe(t_processio *processio)
@@ -32,7 +32,7 @@ pid_t	ft_pipe(t_processio *processio)
 		pid = fork();
 		if (pid == 0)
 		{
-			ft_child(pipe_fd);
+			ft_child(pipe_fd, processio);
 			processio->num_com++;
 			pid = ft_pipe(processio);
 		}
@@ -52,11 +52,12 @@ static void	ft_parent(int *pipe_fd, t_processio *processio)
 	close(pipe_fd[1]);
 }
 
-static void	ft_child(int *pipe_fd)
+static void	ft_child(int *pipe_fd, t_processio *processio)
 {
 	close(pipe_fd[1]);
 	dup2(pipe_fd[0], 0);
 	close(pipe_fd[0]);
+	processio->parent_pid = 0;
 }
 
 pid_t	ft_manage_heredoc(int pipe_fd[2], char *heredoc, t_processio *processio)
@@ -90,8 +91,10 @@ pid_t	ft_manage_heredoc(int pipe_fd[2], char *heredoc, t_processio *processio)
 
 int	valid_tokens(t_parsed *tokens)
 {
-	int	type;
+	int			type;
+	t_parsed	*aux;
 
+	aux = tokens;
 	while (tokens)
 	{
 		type = tokens->type;
@@ -107,7 +110,7 @@ int	valid_tokens(t_parsed *tokens)
 		else if (type != STRING)
 		{
 			if (!tokens->next || tokens->next->type != STRING)
-				return (ft_syntax_error());
+				return (ft_syntax_error(aux));
 		}
 		tokens = tokens->next;
 	}

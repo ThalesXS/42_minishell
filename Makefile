@@ -71,14 +71,8 @@ $(NAME): $(OBJ_DIR) $(TARGET)
 	@echo "╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝"
 	@echo "==================================================================="
 	@echo "Thales Xisto (txisto-d) - Davi Meireles (dmeirele)$(RESET)"
-	@./$(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC)/%.c
-	$(eval COMPTEUR=$(shell echo $$(($(COMPTEUR)+1))))
-	@printf "\e[?25l"
-	@if test $(COMPTEUR) -eq 1;then \
-		printf "$(B_YELLOW)$(NAME)$(RESET):$(YELLOW) Compiling binary files...$(RESET)\n\n";fi
-	@printf "\033[A\33[2K\r$(CYAN)Binary $(COMPTEUR): $@$(RESET)\n"
 	@$(CC) $(W) $(I) $(O) $< -o $@
 
 $(OBJ_DIR):

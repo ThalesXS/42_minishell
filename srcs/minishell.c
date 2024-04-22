@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:19:11 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/22 16:06:56 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/22 20:55:43 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	ft_minishell(void)
 			line[1] = ft_strtrim(line[0], " \t\n");
 			free(line[0]);
 			line[0] = line[1];
+			ft_printf("OUTSIDE\n");
 			tokens = ft_tokenizer(line[0]);
 			if (!tokens)
 				continue ;
@@ -110,22 +111,26 @@ int	redirect_basic_check(char *line)
 	int	i;
 	int	count;
 
-	i = -1;
-	while (line[++i])
+	i = 0;
+	while (line[i])
 	{
 		count = 0;
 		if (find_char(line[i], "><") && !quotes_open(line, i))
 		{
 			while (line[i] && find_char(line[i], "><"))
 			{
-				if (find_char(line[i + 1], "><") && line[i + 1] != line[i])
+				if (line[i + 1] && find_char(line[i + 1], "><")
+					&& line[i + 1] != line[i])
 					return (0);
 				count++;
 				i++;
 			}
+			ft_printf("INSIDE\n");
 		}
 		if (count > 2)
 			return (0);
+		if (line[i])
+			i++;
 	}
 	return (1);
 }

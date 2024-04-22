@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:19:50 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/22 15:22:34 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/22 20:14:45 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_parser(t_parsed *tokens, char *line)
 	t_processio	processio;
 
 	processio.line = line;
-	processio.parent_pid = getpid();
+	processio.parent_pid = 1;
 	processio.std_fd[0] = dup(0);
 	processio.std_fd[1] = dup(1);
 	commands = ft_commands(tokens, &processio.total_com);
@@ -38,7 +38,7 @@ void	ft_parser(t_parsed *tokens, char *line)
 	ft_free_commands(commands, processio.total_com);
 	if (processio.child_pid)
 		waitpid(processio.child_pid, &g_signal, 0);
-	if (getpid() != processio.parent_pid)
+	if (processio.parent_pid != 1)
 		ft_exit(NULL, NULL, NULL, 0);
 	ft_return_processio(&processio);
 }

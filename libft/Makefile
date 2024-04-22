@@ -45,11 +45,6 @@ $(NAME): $(OBJ)
 	@echo "$(B_GREEN)$(NAME) created$(RESET)"
 
 %.o: %.c
-	$(eval COMPTEUR=$(shell echo $$(($(COMPTEUR)+1))))
-	@printf "\e[?25l"
-	@if test $(COMPTEUR) -eq 1;then \
-		printf "$(B_GREEN)$(NAME)$(RESET): Compiling binary files...$(RESET)\n\n";fi
-	@printf "\033[A\33[2K\r$(CYAN)Binary $(COMPTEUR): $@$(RESET)\n"
 	@$(CCW) -c $<
 
 clean:

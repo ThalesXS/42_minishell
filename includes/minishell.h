@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:06:26 by pabernar          #+#    #+#             */
-/*   Updated: 2024/04/22 16:10:42 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/22 20:57:57 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,7 +264,7 @@ void				ft_delete_redirects(t_parsed **aux, t_parsed **tokens,
 						int num_com);
 
 //	====================			pipe_utils.c			====================
-int					ft_syntax_error(void);
+int					ft_syntax_error(t_parsed *tokens);
 
 //	====================			envs_utils.c			====================
 void				ft_mslvl(t_envs *envs, char *envp);
