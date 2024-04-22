@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:08:49 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/20 23:22:30 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/22 21:14:02 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	ft_redirect(t_processio *processio)
 	t_parsed	*aux;
 	int			fd;
 
+	fd = 0;
 	aux = processio->commands[processio->num_com];
 	while (aux && aux->next)
 	{
