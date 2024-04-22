@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:06:24 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/18 17:31:42 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/22 12:18:37 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,12 @@ void	ft_exit(t_parsed *tokens, t_parsed *force_signal, t_parsed **commands,
 static void	ft_forced_signal_exit(t_parsed **commands, int total_com,
 		int sig_value)
 {
+	t_processio	*processio;
+
+	processio = ft_return_processio(NULL);
 	ft_free_envs(return_envs(0));
+	if (processio)
+		free(processio->line);
 	if (commands && total_com)
 		ft_free_commands(commands, total_com);
 	exit(sig_value);
