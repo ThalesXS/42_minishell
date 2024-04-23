@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:12:17 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/22 16:08:25 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/23 12:49:35 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ static int	ft_check_quotes_and_exp(char *str);
 
 t_parsed	*ft_expand_variables(t_parsed *tokens, char *line)
 {
-	char		*new;
-	char		*tmp;
 	t_envs		*envs;
 	t_parsed	*aux;
 	t_parsed	*to_free;
@@ -29,8 +27,6 @@ t_parsed	*ft_expand_variables(t_parsed *tokens, char *line)
 		while (aux && ft_check_quotes_and_exp(aux->text))
 		{
 			envs = return_envs(0);
-			new = NULL;
-			tmp = NULL;
 			if (ft_prev_is_redirect(aux))
 				break ;
 			aux->text = ft_expand_heredoc(aux->text, envs);

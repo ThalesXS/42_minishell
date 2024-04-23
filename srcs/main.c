@@ -6,13 +6,13 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:18:56 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/20 23:43:03 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/23 12:50:36 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_signal;
+int	g_signal = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -20,7 +20,6 @@ int	main(int argc, char **argv, char **envp)
 		return (printf("No arguments\n"));
 	return_argv(argv);
 	ft_init_signals();
-	g_signal = 0;
 	return_envs(ft_create_envs(envp));
 	ft_minishell();
 	return (0);

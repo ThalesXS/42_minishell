@@ -6,10 +6,9 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 21:59:18 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/22 21:59:23 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/23 12:50:59 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
