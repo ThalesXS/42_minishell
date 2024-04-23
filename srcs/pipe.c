@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:15:14 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/22 20:59:07 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/23 13:48:54 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ pid_t	ft_pipe(t_processio *processio)
 	processio->redirect_signal = 0;
 	if (processio->num_com < processio->total_com - 1)
 	{
-		processio->redirect_fd = ft_redirect(processio);
+		processio->redirect_fd = ft_redirect(processio, 0);
 		status = pipe(pipe_fd);
 		if (status == -1)
 			ft_printf("Error creating pipe\n");

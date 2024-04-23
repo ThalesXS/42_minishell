@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:18:56 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/23 12:50:36 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/23 13:52:06 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ void	ft_retrieve_io(t_processio *processio)
 void	ft_finish_redirect(t_processio *processio)
 {
 	dup2(processio->std_fd[1], 1);
-	processio->redirect_fd = ft_redirect(processio);
+	processio->redirect_fd = ft_redirect(processio, 0);
 }

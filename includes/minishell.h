@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 21:59:18 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/23 12:50:59 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/23 13:49:20 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ int					valid_tokens(t_parsed *tokens);
 /* ************************************************************************** */
 pid_t				ft_manage_heredoc(int pipe_fd[2], char *heredoc,
 						t_processio *processio);
-int					ft_redirect(t_processio *processio);
+int					ft_redirect(t_processio *processio, int error);
 void				ft_in_doc(int pipe_fd[2], char *heredoc);
 
 /* ************************************************************************** */

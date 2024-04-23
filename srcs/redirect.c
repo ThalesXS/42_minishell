@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:08:49 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/22 21:14:02 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/23 13:54:13 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	ft_what_red(t_parsed **aux, t_processio *processio)
 	return (fd);
 }
 
-int	ft_redirect(t_processio *processio)
+int	ft_redirect(t_processio *processio, int error)
 {
 	t_parsed	*aux;
 	int			fd;
@@ -53,10 +53,11 @@ int	ft_redirect(t_processio *processio)
 		fd = ft_what_red(&aux, processio);
 		if (fd <= -1)
 		{
-			if (errno == 13)
+			if (errno == 13 && error == 0)
 				ft_err_msg(" Permission denied", 1);
-			else
+			else if (error == 0)
 				ft_err_msg(" No such file or directory", 1);
+			ft_redirect(processio, 1);
 			return (-1);
 		}
 		if (aux && aux->next && fd == 1)
