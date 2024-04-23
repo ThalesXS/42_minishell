@@ -19,6 +19,16 @@ echo '\$'
 echo \$
 echo \$?
 echo \$?HELLO
+echo ">"
+echo >
+echo "|"
+echo '|'
+echo -nnnnnnnnnnnnnnnnnnnnnnnn- Hello World!
+echo -n
+echo -n- -n -n -n -n -n -n -n -n -n Hello World!
+echo -------n Hello World!
+echo $USER
+echo
 pwd
 pwd oi
 export hello
@@ -30,12 +40,22 @@ export hello world
 export HELLO-=123
 export =
 export 123
+export NEW_VAR=42
+export
+export NEW_VAR="add test with quotes"
+export NEW_VAR=
+export NEW_VAR=$USER
+export NEW_VAR="with unclosed quotes
+export -p NEW_VAR2
+export NEW_VAR=" -?42 "
 unset
 unset HELLO
 unset HELLO1 HELLO2
 unset HOME
 unset PATH
 unset SHELL
+unset NEW_VAR
+unset -n NEW_VAR2
 cd \$PWD
 cd \$PWD hi
 cd 123123
