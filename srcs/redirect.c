@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:08:49 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/23 13:54:13 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/24 19:12:19 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@ static int	ft_write_append(t_parsed **aux, t_parsed **tokens,
 static int	ft_input(t_parsed **aux, t_parsed **tokens, int num_com);
 static int	ft_doc(t_parsed **aux, t_processio *processio);
 
-static int	ft_what_red(t_parsed **aux, t_processio *processio)
+static int	ft_what_red(t_parsed **aux, t_processio *processio, int error)
 {
 	int	fd;
 
 	fd = 1;
-	if ((*aux)->type == RD_OVERWRITE)
+	if ((*aux)->type == RD_OVERWRITE && !error)
 	{
 		fd = ft_write_append(&(*aux), processio->commands,
 				processio->num_com, O_WRONLY | O_CREAT | O_TRUNC);
 		processio->redirect_signal = 1;
 	}
-	else if ((*aux)->type == RD_APPEND)
+	else if ((*aux)->type == RD_APPEND && !error)
 	{
 		fd = ft_write_append(&(*aux), processio->commands,
 				processio->num_com, O_WRONLY | O_CREAT | O_APPEND);
@@ -50,7 +50,10 @@ int	ft_redirect(t_processio *processio, int error)
 	aux = processio->commands[processio->num_com];
 	while (aux && aux->next)
 	{
-		fd = ft_what_red(&aux, processio);
+		if (error == 0)
+			fd = ft_what_red(&aux, processio, 0);
+		else if (error == 1)
+			fd = ft_what_red(&aux, processio, 1);
 		if (fd <= -1)
 		{
 			if (errno == 13 && error == 0)
