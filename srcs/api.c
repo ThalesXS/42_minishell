@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:18:10 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/22 15:17:50 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:32:46 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,6 @@ t_envs	*return_envs(t_envs *envs)
 	if (envs)
 		static_envs = envs;
 	return (static_envs);
-}
-
-char	**return_argv(char **argv)
-{
-	static char	**static_argv;
-
-	if (argv)
-		static_argv = argv;
-	return (static_argv);
 }
 
 t_processio	*ft_return_processio(t_processio *processio)

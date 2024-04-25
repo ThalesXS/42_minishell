@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_typefinder.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabernar <pabernar@student.42porto.co      +#+  +:+       +#+        */
+/*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 14:54:36 by pabernar          #+#    #+#             */
-/*   Updated: 2023/10/18 11:36:14 by pabernar         ###   ########.fr       */
+/*   Created: 2023/10/16 14:54:36 by txisto-d          #+#    #+#             */
+/*   Updated: 2024/04/25 16:24:49 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

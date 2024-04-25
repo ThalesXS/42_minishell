@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 21:59:18 by txisto-d          #+#    #+#             */
-/*   Updated: 2024/04/23 13:49:20 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:32:32 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,6 @@ int					padding_needed(char *line, int i, int pad);
 void				pad(char *src, char *dest, int i, int j);
 char				*pad_central(char *line);
 int					quotes_open(char *str, int target_index);
-void				ft_farfaraway(t_parsed *tokens, int klen, char **new,
-						char **tmp);
 int					ft_check_open_quotes(char *line);
 int					redirect_basic_check(char *line);
 int					pipe_check(char *line);
@@ -117,7 +115,6 @@ void				ft_save_exit_status(int status, t_envs *envs);
 /* ************************************************************************** */
 /*				excve.c					       */
 /* ************************************************************************** */
-void				*ft_check_command(t_envs *envs, t_parsed *tokens);
 void				ft_find_path(t_parsed *token, t_envs *envs);
 /* ************************************************************************* */
 /*				envs.c						   */
@@ -132,7 +129,6 @@ void				ft_mslvl(t_envs *envs, char *envp);
 /*				api.c						   */
 /* ************************************************************************** */
 t_envs				*return_envs(t_envs *envs);
-char				**return_argv(char **argv);
 t_processio			*ft_return_processio(t_processio *processio);
 /* ************************************************************************** */
 /*				signal.c					   */
@@ -196,7 +192,6 @@ void				ft_handle_sigint(int sig);
 void				ft_handle_sigint_ign(int sig);
 void				ft_handle_sigquit(int sig);
 void				ft_handle_doc(int sig);
-void				ft_userhandler(void);
 /* ************************************************************************** */
 /*									directory.c								*/
 /* ************************************************************************** */

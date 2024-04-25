@@ -6,7 +6,7 @@
 /*   By: txisto-d <txisto-d@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:18:56 by dmeirele          #+#    #+#             */
-/*   Updated: 2024/04/23 13:52:06 by txisto-d         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:33:02 by txisto-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ int	g_signal = 0;
 int	main(int argc, char **argv, char **envp)
 {
 	if (argc != 1 && argv)
-		return (printf("No arguments\n"));
-	return_argv(argv);
+	{
+		ft_printf("This program does not accept any arguments.\n");
+		return (1);
+	}
 	ft_init_signals();
 	return_envs(ft_create_envs(envp));
 	ft_minishell();
